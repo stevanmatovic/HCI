@@ -22,9 +22,9 @@ namespace WpfApplication1
         public String mera { get; set; }
         public String cena { get; set; }
         public String datumOtkrivanja { get; set; }
-        public bool naMapi { get; set; }
-        public double left { get; set; }
-        public double top { get; set; }
+
+        public double pozicijaX { get; set; }
+        public double pozicijaY { get; set; }
 
         public List<Etiketa> listaEtiketaResursa;
 

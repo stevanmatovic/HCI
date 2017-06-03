@@ -49,7 +49,7 @@ namespace WpfApplication1
         private string _uriLocation;
        
         #region fieldProperties
-        public int Kapacitet
+        public int Cena
         {
             get
             {
@@ -198,7 +198,7 @@ namespace WpfApplication1
             }
             else 
             {
-                Resurs lokal = new Resurs
+                Resurs resurs = new Resurs
                 {
                     id = _id,
                     ime = _ime,
@@ -215,10 +215,13 @@ namespace WpfApplication1
                     imagePath = _uriLocation
                 };
                 ObservableCollection<Resurs> listaLokala = lokalDAO.ucitajListuResursa();
-                listaLokala.Add(lokal);
+                listaLokala.Add(resurs);
                 lokalDAO.upisiUFajl(listaLokala);
 
-                listaResursaParent.Add(lokal);
+                ((MainWindow)parent).dodajSliku(_uriLocation,_id);
+                
+
+                listaResursaParent.Add(resurs);
 
                 //id
                 

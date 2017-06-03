@@ -35,6 +35,8 @@ namespace WpfApplication1
 
         public static Dictionary<Image, Resurs> lokaliNaMapi { get; set; }
 
+        public static Dictionary<String, Canvas> skladiste = new Dictionary<String, Canvas>();
+
         Point startPoint = new Point();
 
         public MainWindow()
@@ -209,6 +211,38 @@ namespace WpfApplication1
             }
         }
 
+        internal void dodajSliku(string uriLocation,String id)
+        {
+           
+            int x = 5;
+            int y = 10;
+
+            ImageBrush image = new ImageBrush();
+            image.ImageSource = new BitmapImage(new Uri(uriLocation, UriKind.Relative));
+
+            Canvas c1 = new Canvas();
+            c1.Background = image;
+            c1.Width = 20;
+            c1.Height = 30;
+
+            skladiste.Add(id, c1);
+
+
+
+            Canvas.SetTop(c1, y);
+            Canvas.SetLeft(c1, x);
+
+          
+
+            mapa.Children.Add(c1);
+
+
+            c1.AllowDrop = true;
+            c1.PreviewMouseLeftButtonDown += this.MouseLeftButtonDown;
+            c1.PreviewMouseMove += this.MouseMove;
+            c1.PreviewMouseLeftButtonUp += this.PreviewMouseLeftButtonUp;
+        }
+
         public void izbrisiTipIzListe(TipResursa tl)
         {
             if (ListaTipova != null)
@@ -381,156 +415,104 @@ namespace WpfApplication1
             }
         }
 
-        private void slikaIzabranogLokala_MouseMove(object sender, MouseEventArgs e)
+        private object movingObject;
+        private double firstXPos, firstYPos;
+        private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                // Get the dragged ListViewItem
-                Image image = sender as Image;
-                //DataGridTemplateColumn dataGridTemplateColumn =
-                // FindAncestor<DataGridTemplateColumn>((DependencyObject)e.OriginalSource);
+
+            Canvas img = sender as Canvas;
+            Canvas canvas = img.Parent as Canvas;
+
+            firstXPos = e.GetPosition(img).X;
+            firstYPos = e.GetPosition(img).Y;
+
+            movingObject = sender;
 
 
-                // Find the data behind the ListViewItem
-                //Image image = (Image)image.ItemContainerGenerator.
-                // ItemFromContainer(dataGridTemplateColumn);
+            int top = Canvas.GetZIndex(img);
+            foreach (Canvas child in canvas.Children)
+                if (top < Canvas.GetZIndex(child))
+                    top = Canvas.GetZIndex(child);
+            Canvas.SetZIndex(img, top + 1);
 
-                // Initialize the drag & drop operation
-                /*if (image.Source != null)
-                {*/
-                DataObject dragData = new DataObject("myFormat", image.Source);
-                DragDrop.DoDragDrop(image, dragData, DragDropEffects.Link);
-                //}
-            }
+
+
         }
-
-        private void slikaIzabranogLokala_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            startPoint = e.GetPosition(null);
-        }
+            Canvas img = sender as Canvas;
+            Canvas canvas = img.Parent as Canvas;
 
-        private void mapa_DragEnter(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
+            movingObject = null;
+
+
+            int top = Canvas.GetZIndex(img);
+            foreach (Canvas child in canvas.Children)
+                if (top > Canvas.GetZIndex(child))
+                    top = Canvas.GetZIndex(child);
+            Canvas.SetZIndex(img, top + 1);
+
+            foreach (String s in skladiste.Keys)
             {
-                e.Effects = DragDropEffects.None;
-            }
-        }
-
-        private void mapa_Drop(object sender, DragEventArgs e)
-        {
-            Image imageControl = new Image();
-            if (e.Data.GetDataPresent("myFormat"))
-            {
-                ImageSource image = e.Data.GetData("myFormat") as ImageSource;
-                imageControl = new Image() { Width = 50, Height = 30, Source = image };
-
-
-
-                /*if (Tabela.SelectedIndex > -1)
+                if (skladiste[s] == img)
                 {
-                    Spomenik s = spomenici.ElementAt(Tabela.SelectedIndex);
-                    r.Obrisi(s);
-                    spomenici.Clear();
-                    UcitajSpomenike();
-                }*/
+                    foreach (Resurs r in ListaResursa)
+                    {
+                        if (r.id == s)
+                        {
+                            r.pozicijaX = X;
+                            r.pozicijaY = Y;
+                        }
+                    }
 
 
-            }
-            else
-            {
-                Image image = e.Data.GetData(typeof(Image)) as Image;
-                imageControl = image;
-                if (this.mapa.Children.Contains(imageControl))
-                {
-                    this.mapa.Children.Remove(imageControl);
+
                 }
-            }
-            //Spomenik s = spomenici.ElementAt(Tabela.SelectedIndex);
-            Resurs l = ListaResursa.ElementAt(lokalDataGrid.SelectedIndex);
 
-            if (!lokaliNaMapi.ContainsKey(imageControl))
+
+            }
+
+
+        }
+
+
+        double X;
+        double Y;
+        private void MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && sender == movingObject)
             {
-                Canvas.SetLeft(imageControl, e.GetPosition(this.mapa).X - imageControl.Width / 2);
-                Canvas.SetTop(imageControl, e.GetPosition(this.mapa).Y - imageControl.Height / 2);
-                daoLokal.remove(l);
-                ListaResursa = daoLokal.ucitajListuResursa();
-                l.naMapi = true;
-                l.left = e.GetPosition(this.mapa).X - imageControl.Width / 2;
-                l.top = e.GetPosition(this.mapa).Y - imageControl.Height / 2;
-                lokaliNaMapi.Remove(imageControl);
-                lokaliNaMapi.Add(imageControl,l);
-                daoLokal.write(l);
-                ListaResursa = daoLokal.ucitajListuResursa();
-                imageControl.PreviewMouseLeftButtonDown += imageControl_PreviewMouseLeftButtonDown;
-                imageControl.MouseLeftButtonDown += imageControl_MouseLeftButtonDown;
-                imageControl.MouseRightButtonDown += imageControl_MouseRightButtonDown;
-                this.mapa.Children.Add(imageControl);
+                Canvas img = sender as Canvas;
+                Canvas canvas = img.Parent as Canvas;
+
+                double newLeft = e.GetPosition(canvas).X - firstXPos - canvas.Margin.Left;
+
+                if (newLeft > canvas.Margin.Left + canvas.ActualWidth - img.ActualWidth)
+                    newLeft = canvas.Margin.Left + canvas.ActualWidth - img.ActualWidth;
+
+                else if (newLeft < canvas.Margin.Left)
+                    newLeft = canvas.Margin.Left;
+                img.SetValue(Canvas.LeftProperty, newLeft);
+
+                double newTop = e.GetPosition(canvas).Y - firstYPos - canvas.Margin.Top;
+
+                if (newTop > canvas.Margin.Top + canvas.ActualHeight - img.ActualHeight)
+                    newTop = canvas.Margin.Top + canvas.ActualHeight - img.ActualHeight;
+
+                else if (newTop < canvas.Margin.Top)
+                    newTop = canvas.Margin.Top;
+                img.SetValue(Canvas.TopProperty, newTop);
+
+                X = newLeft;
+                Y = newTop;
+
             }
-            else if (lokaliNaMapi.ContainsKey(imageControl))
-            {
-                lokaliNaMapi.Remove(imageControl);
-                Canvas.SetLeft(imageControl, e.GetPosition(this.mapa).X - imageControl.Width / 2);
-                Canvas.SetTop(imageControl, e.GetPosition(this.mapa).Y - imageControl.Height / 2);
-                daoLokal.remove(l);
-                ListaResursa = daoLokal.ucitajListuResursa();
-                l.naMapi = true;
-                l.left = e.GetPosition(this.mapa).X - imageControl.Width / 2;
-                l.top = e.GetPosition(this.mapa).Y - imageControl.Height / 2;
-                lokaliNaMapi.Add(imageControl, l);
-                daoLokal.write(l);
-                ListaResursa = daoLokal.ucitajListuResursa();
-                /*imageControl.PreviewMouseLeftButtonDown += imageControl_PreviewMouseLeftButtonDown;
-                imageControl.MouseLeftButtonDown += imageControl_MouseLeftButtonDown;
-                imageControl.MouseRightButtonDown += imageControl_MouseRightButtonDown;*/
-                this.mapa.Children.Add(imageControl);
-            }
+
+
+
+
         }
 
-        private void imageControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            //messageboxresult dialogresult = messagebox.show("da li zelite da obrisete spomenik?", "brisanje spomenika sa mape", messageboxbutton.yesno);
-            //if (dialogresult == messageboxresult.yes)
-            //{
-            //    image image = e.source as image;
-            //    this.mapa.children.remove(image);
-            //    messagebox.show("spomenik je obrisan");
-            //    spomenik s = spomenicinamapi[image];
-            //    r.obrisi(s);
-            //    s.namapi = false;
-            //    r.dodaj(s);
-            //    spomenicinamapi.clear();
-            //    ucitajmapu();
-            //}
-            //else if (dialogresult == messageboxresult.no)
-            //{
-            //    return;
-            //}
-        }
-
-        private void imageControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Image image = e.Source as Image;
-            DataObject data = new DataObject(typeof(Image), image);
-            DragDrop.DoDragDrop(image, data, DragDropEffects.Move);
-        }
-
-        private void imageControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Image image = e.Source as Image;
-            Resurs l = lokaliNaMapi[image];
-            int indeks = -1;
-            foreach (Resurs lokal in ListaResursa) {
-                if (lokal.id == l.id) {
-                    indeks = ListaResursa.IndexOf(lokal);
-                    break;
-                }
-            }
-            //TODO
-            lokalDataGrid.SelectedIndex = ListaResursa.Count -  indeks - 1;
-        }
 
         private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
