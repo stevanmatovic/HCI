@@ -211,11 +211,13 @@ namespace WpfApplication1
             }
         }
 
+
+        
+
         internal void dodajSliku(string uriLocation,String id)
         {
            
-            int x = 5;
-            int y = 10;
+            
 
             ImageBrush image = new ImageBrush();
             image.ImageSource = new BitmapImage(new Uri(uriLocation, UriKind.Relative));
@@ -227,6 +229,9 @@ namespace WpfApplication1
 
             skladiste.Add(id, c1);
 
+            Random r = new Random();
+            double y = r.NextDouble() * (mapa.Height - 230);
+            double x = r.NextDouble() * (mapa.Width-230);
 
 
             Canvas.SetTop(c1, y);
@@ -238,9 +243,9 @@ namespace WpfApplication1
 
 
             c1.AllowDrop = true;
-            c1.PreviewMouseLeftButtonDown += this.MouseLeftButtonDown;
-            c1.PreviewMouseMove += this.MouseMove;
-            c1.PreviewMouseLeftButtonUp += this.PreviewMouseLeftButtonUp;
+            c1.PreviewMouseLeftButtonDown += this.MojMouseLeftButtonDown;
+            c1.PreviewMouseMove += this.MojMouseMove;
+            c1.PreviewMouseLeftButtonUp += this.MojPreviewMouseLeftButtonUp;
         }
 
         public void izbrisiTipIzListe(TipResursa tl)
@@ -417,7 +422,7 @@ namespace WpfApplication1
 
         private object movingObject;
         private double firstXPos, firstYPos;
-        private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void MojMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
             Canvas img = sender as Canvas;
@@ -438,7 +443,7 @@ namespace WpfApplication1
 
 
         }
-        private void PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void MojPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Canvas img = sender as Canvas;
             Canvas canvas = img.Parent as Canvas;
@@ -478,7 +483,7 @@ namespace WpfApplication1
 
         double X;
         double Y;
-        private void MouseMove(object sender, MouseEventArgs e)
+        private void MojMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && sender == movingObject)
             {
