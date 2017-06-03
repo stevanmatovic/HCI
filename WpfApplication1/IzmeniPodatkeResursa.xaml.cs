@@ -44,7 +44,7 @@ namespace WpfApplication1
         public ObservableCollection<TipResursa> ListaTipova { get; set; }
         public TipResursa SelectedTip { get; set; }
 
-        public DialogResult DialogResult { get; set; }
+        public DialogResult dialogResult { get; set; }
 
         #region setProperties
         public string Ime
@@ -107,7 +107,7 @@ namespace WpfApplication1
                 }
             }
         } 
-        public string Alkohol
+        public string Frekvencija
         {
             get
             {
@@ -118,11 +118,11 @@ namespace WpfApplication1
                 if (!value.Equals(_frekvencija))
                 {
                     _frekvencija = value;
-                    OnPropertyChanged("Alkohol");
+                    OnPropertyChanged("Frekvencija");
                 }
             }
         }
-        public string Kapacitet
+        public string Cena
         {
             get
             {
@@ -171,7 +171,7 @@ namespace WpfApplication1
             ListaTipova = dao.ucitajListuTipova();
         }
 
-        public void inicijalizujLokalZaEdit(Resurs izabraniResurs)
+        public void inicijalizujResursZaEdit(Resurs izabraniResurs)
         {
             retResurs = izabraniResurs;
             if (izabraniResurs == null)
@@ -194,35 +194,35 @@ namespace WpfApplication1
                 this._mera = izabraniResurs.mera;
 
                 #region setCBParams
-                if (_frekvencija.Equals("Sluzi kasno nocu"))
+                if (_frekvencija.Equals("Redak"))
                 {
-                    sluziKasno.IsSelected = true;
+                    redak.IsSelected = true;
                 }
-                else if (_frekvencija.Equals("Sluzi do 23:00"))
+                else if (_frekvencija.Equals("Čest"))
                 {
-                    sluzi23.IsSelected = true;
+                    cest.IsSelected = true;
                 }
                 else
                 {
-                    neSluzi.IsSelected = true;
+                    univerzalan.IsSelected = true;
                 }
 
 
-                if (_mera.Equals("Niske cene"))
+                if (_mera.Equals("Merica"))
                 {
-                    niskeCene.IsSelected = true;
+                    merica.IsSelected = true;
                 }
-                else if (_mera.Equals("Srednje cene"))
+                else if (_mera.Equals("Barel"))
                 {
-                    srednjeCene.IsSelected = true;
+                    barel.IsSelected = true;
                 }
-                else if (_mera.Equals("Visoke cene"))
+                else if (_mera.Equals("Tona"))
                 {
-                    visokeCene.IsSelected = true;
+                    tona.IsSelected = true;
                 }
                 else 
                 {
-                    izuzetnoVisokeCene.IsSelected = true;
+                    kilogram.IsSelected = true;
                 }
                 #endregion
 
@@ -232,38 +232,38 @@ namespace WpfApplication1
                 #region setRadioParams
                 if (_strateski.Equals("da"))
                 {
-                    daInvalidi.IsChecked = true;
+                    daVazan.IsChecked = true;
                 }
                 else 
                 {
-                    neInvalidi.IsChecked = true;
+                    neVazan.IsChecked = true;
                 }
 
 
                 if (_obnovljiv.Equals("da"))
                 {
-                    daPusenje.IsChecked = true;
+                    daObnovljiv.IsChecked = true;
                 }
                 else
                 {
-                    nePusenje.IsChecked = true;
+                    neObnovljiv.IsChecked = true;
                 }
 
 
                 if (_eksploatacija.Equals("da"))
                 {
-                    daRezervacije.IsChecked = true;
+                    daEksploatacija.IsChecked = true;
                 }
                 else
                 {
-                    neRezervacije.IsChecked = true;
+                    neEksploatacija.IsChecked = true;
                 }
                 #endregion
 
                 this._datumOtkrivanja = izabraniResurs.datumOtkrivanja;
 
-                datumOtvaranja.SelectedDate = DateTime.Parse(_datumOtkrivanja);
 
+                datumOtvaranja.SelectedDate = DateTime.Parse(_datumOtkrivanja);
                 izmenjenaSlikaLokala.Source = new BitmapImage(new Uri(_uriLocation));
                
                 this.Show();
@@ -306,7 +306,7 @@ namespace WpfApplication1
                 retResurs.datumOtkrivanja = "" + day + "." + month + "." + year; 
                 
                 #region setRadioButtons
-                if (daInvalidi.IsChecked == true)
+                if (daVazan.IsChecked == true)
                 {
                     retResurs.strateskiVazan = "da";
                 }
@@ -315,7 +315,7 @@ namespace WpfApplication1
                     retResurs.strateskiVazan = "ne";
                 }
 
-                if (daPusenje.IsChecked == true)
+                if (daObnovljiv.IsChecked == true)
                 {
                     retResurs.obnovljiv = "da";
                 }
@@ -324,7 +324,7 @@ namespace WpfApplication1
                     retResurs.obnovljiv = "ne";
                 }
 
-                if (daRezervacije.IsChecked == true)
+                if (daEksploatacija.IsChecked == true)
                 {
                     retResurs.eksploatacija = "da";
                 }
@@ -335,34 +335,34 @@ namespace WpfApplication1
                 #endregion
                 #region setCB
 
-                if (neSluzi.IsSelected == true)
+                if (redak.IsSelected == true)
                 {
-                    retResurs.frekvencijaCB = "Ne sluzi";
+                    retResurs.frekvencijaCB = "Redak";
                 }
-                else if (sluzi23.IsSelected == true)
+                else if (cest.IsSelected == true)
                 {
-                    retResurs.frekvencijaCB = "Sluzi do 23:00";
+                    retResurs.frekvencijaCB = "Čest";
                 }
                 else
                 {
-                    retResurs.frekvencijaCB = "Sluzi kasno nocu";
+                    retResurs.frekvencijaCB = "Univerzalan";
                 }
 
-                if (niskeCene.IsSelected == true)
+                if (merica.IsSelected == true)
                 {
-                    retResurs.mera = "Niske cene";
+                    retResurs.mera = "Merica";
                 }
-                else if (srednjeCene.IsSelected == true)
+                else if (tona.IsSelected == true)
                 {
-                    retResurs.mera = "Srednje cene";
+                    retResurs.mera = "Tona";
                 }
-                else if (visokeCene.IsSelected == true)
+                else if (barel.IsSelected == true)
                 {
-                    retResurs.mera = "Visoke cene";
+                    retResurs.mera = "Barel";
                 }
                 else
                 {
-                    retResurs.mera = "Izuzetno visoke cene";
+                    retResurs.mera = "Kilogram";
                 }
                 #endregion
 
@@ -386,7 +386,7 @@ namespace WpfApplication1
             BitmapImage image = null;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg";
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (fileDialog.FileName != null)
                 {

@@ -33,19 +33,19 @@ namespace WpfApplication1
             }
         }
         MainWindow parent;
-        ObservableCollection<Resurs> listaLokalaParent;
+        ObservableCollection<Resurs> listaResursaParent;
 
         public ObservableCollection<TipResursa> ListaTipova { get; set; }
         public TipResursa SelectedTip { get; set; }
         private TipDAO dao;
 
-        public DialogResult DialogResult { get; set; }
+        public DialogResult dialogResult { get; set; }
 
         private string _id;
         private string _ime;
         private string _opis;
         private string _tip;
-        private int _kapacitet;
+        private int _cena;
         private string _uriLocation;
        
         #region fieldProperties
@@ -53,13 +53,13 @@ namespace WpfApplication1
         {
             get
             {
-                return _kapacitet;
+                return _cena;
             }
             set
             {
-                if (value != _kapacitet)
+                if (value != _cena)
                 {
-                    _kapacitet = value;
+                    _cena = value;
                     OnPropertyChanged("Kapacitet");
                 }
             }
@@ -133,7 +133,7 @@ namespace WpfApplication1
             this.DataContext = this;
 
             parent = mw;
-            listaLokalaParent = mw.ListaResursa;
+            listaResursaParent = mw.ListaResursa;
 
             dao = new TipDAO();
             ListaTipova = dao.ucitajListuTipova();
@@ -146,52 +146,52 @@ namespace WpfApplication1
             ResursDAO lokalDAO = new ResursDAO();
 
             TipResursa retTip = (TipResursa)tabelaTipova.SelectedItem;
-            String alkL = alkOK.Text;
-            String cenaK = cenaKat.Text;
-            String invL;
-            String pusL;
-            String rezL;
+            String frekvencijaL = frekvencijaCB.Text;
+            String meraL = meraCB.Text;
+            String vazan;
+            String obnovljivL;
+            String eksploatacijaL;
             #region setRadioButtons
-            if (daInvalidi.IsChecked == true)
+            if (daVazan.IsChecked == true)
             {
-                invL = "da";
+                vazan = "da";
             }
-            else if(neInvalidi.IsChecked == true)
+            else if(neVazan.IsChecked == true)
             {
-                invL = "ne";
+                vazan = "ne";
             } else 
             {
-                invL = "";
+                vazan = "";
             }
-            if (daPusenje.IsChecked == true)
+            if (daObnovljiv.IsChecked == true)
             {
-                pusL = "da";
+                obnovljivL = "da";
             }
-            else if(nePusenje.IsChecked == true)
+            else if(neObnovljiv.IsChecked == true)
             {
-                pusL = "ne";
+                obnovljivL = "ne";
             } else 
             {
-                pusL = "";
+                obnovljivL = "";
             }
-            if (daRezervacije.IsChecked == true)
+            if (daEksploatacija.IsChecked == true)
             {
-                rezL = "da";
+                eksploatacijaL = "da";
             }
-            else if(neRezervacije.IsChecked == true)
+            else if(neEksploatacija.IsChecked == true)
             {
-                rezL = "ne";
+                eksploatacijaL = "ne";
             } else
             {
-                rezL = "";
+                eksploatacijaL = "";
             }
             #endregion
-            String dateL = datumOtvaranja.ToString();
+            String dateL = datumOtvaranja.SelectedDate.Value.ToShortDateString();
             String uriLoc = _uriLocation;
             String tipLok = retTip.ime;
            
-            if (idLokala.Text.Equals("") || imeLokala.Text.Equals("") || opisLokala.Text.Equals("") || alkL.Equals("") || invL.Equals("") || pusL.Equals("")
-                                || rezL.Equals("") || dateL.Equals("") || _kapacitet.ToString().Equals("") || retTip == null)
+            if (idResursa.Text.Equals("") || imeResursa.Text.Equals("") || opisResursa.Text.Equals("") || frekvencijaL.Equals("") || vazan.Equals("") || obnovljivL.Equals("")
+                                || eksploatacijaL.Equals("") || dateL.Equals("") || _cena.ToString().Equals("") || retTip == null)
             {
                 MessageBox mb = new MessageBox("Niste uneli sve podatke");
                 mb.Show();              
@@ -205,20 +205,20 @@ namespace WpfApplication1
                     opis = _opis,
                     tip = tipLok,
                     tipResursa = retTip,
-                    frekvencijaCB = alkL,
-                    mera = cenaK,
-                    strateskiVazan = invL,
-                    obnovljiv = pusL,
-                    eksploatacija = rezL,/* cenaKategorija = cenaK,*/
+                    frekvencijaCB = frekvencijaL,
+                    mera = meraL,
+                    strateskiVazan = vazan,
+                    obnovljiv = obnovljivL,
+                    eksploatacija = eksploatacijaL,/* cenaKategorija = cenaK,*/
                     datumOtkrivanja = dateL,
-                    cena = _kapacitet.ToString(),
+                    cena = _cena.ToString(),
                     imagePath = _uriLocation
                 };
                 ObservableCollection<Resurs> listaLokala = lokalDAO.ucitajListuResursa();
                 listaLokala.Add(lokal);
                 lokalDAO.upisiUFajl(listaLokala);
 
-                listaLokalaParent.Add(lokal);
+                listaResursaParent.Add(lokal);
 
                 //id
                 
@@ -231,7 +231,7 @@ namespace WpfApplication1
             BitmapImage image = null;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg";
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 if (fileDialog.FileName != null)
                 {
@@ -247,7 +247,17 @@ namespace WpfApplication1
             TipResursa izabraniTip = (TipResursa)tabelaTipova.SelectedItem;
             slikaLokala.Source = new BitmapImage(new Uri(izabraniTip.slikaPath));
             this._uriLocation = izabraniTip.slikaPath;
-        }      
+        }
+
+        private void kapacitetBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void frekvencijaCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 }

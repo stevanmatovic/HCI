@@ -20,7 +20,7 @@
                         <RowDefinition Height="154*" />
                         <RowDefinition Height="472*" />
                     </Grid.RowDefinitions>
-                    <DataGrid AutoGenerateColumns="False" Height="133" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="137,11,0,0" Name="lokalDataGrid" VerticalAlignment="Top" ItemsSource="{Binding Path=ListaLokala}" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="lokalDataGrid_SelectionChanged" Grid.ColumnSpan="2">
+                    <DataGrid AutoGenerateColumns="False" Height="133" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="137,11,0,0" Name="lokalDataGrid" VerticalAlignment="Top" ItemsSource="{Binding Path=ListaResursa}" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="lokalDataGrid_SelectionChanged" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Slika" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -36,7 +36,7 @@
 
                             <DataGridTextColumn Binding="{Binding tip}" Header="Tip" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding frekvencijaCB}" Header="Frekvencija pojavljivanja" IsReadOnly="True" />
-                            <DataGridTextColumn Binding="{Binding stratesiVazan}" Header="Strateški važan" IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding strateskiVazan}" Header="Strateški važan" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding obnovljiv}" Header="Obnovljiv" IsReadOnly="True" />
 
                             <DataGridTextColumn Binding="{Binding eksploatacija}" Header="Moguća eksploatacija" IsReadOnly="True" />
@@ -118,13 +118,12 @@
                 <DataGridTextColumn Binding="{Binding opis}" Header="Opis" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Button" HorizontalAlignment="Left" Margin="784,325,0,0" VerticalAlignment="Top" Width="102" Click="dodajEtiketuIzabranomLokalu_Click" Height="20"/>
-        <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Button" HorizontalAlignment="Left" Margin="892,325,0,0" VerticalAlignment="Top" Width="100" Click="izbrisiEtiketuIzabranomLokalu_Click" Height="20"/>
+        <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Dodaj etiketu" HorizontalAlignment="Left" Margin="784,325,0,0" VerticalAlignment="Top" Width="102" Click="dodajEtiketuIzabranomLokalu_Click" Height="20"/>
+        <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Izbriši etiketu" HorizontalAlignment="Left" Margin="892,325,0,0" VerticalAlignment="Top" Width="100" Click="izbrisiEtiketuIzabranomLokalu_Click" Height="20"/>
         <Canvas HorizontalAlignment="Left" Name="mapa" Height="344" Margin="10,15,0,0" VerticalAlignment="Top" Width="759" AllowDrop="True" Drop="mapa_Drop" DragEnter="mapa_DragEnter">
             <Canvas.Background>
                 <ImageBrush ImageSource="C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\Images\mapa.svg" />
             </Canvas.Background>
         </Canvas>
-        <Canvas HorizontalAlignment="Left" Height="100" Margin="748,85,-136,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

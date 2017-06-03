@@ -98,16 +98,16 @@ namespace WpfApplication1
 
         private void izmeniResursButton_Click(object sender, RoutedEventArgs e)
         {
-            Resurs l = (Resurs)lokalDataGrid.SelectedItem;
+            Resurs r = (Resurs)lokalDataGrid.SelectedItem;
             IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
-            ipl.inicijalizujLokalZaEdit(l);
+            ipl.inicijalizujResursZaEdit(r);
             Resurs ret = ipl.vratiIzmenjen();
 
-            if (l != null)
+            if (r != null)
             {
                 for (int i = 0; i < ListaResursa.Count; i++)
                 {
-                    if (ListaResursa[i].id == l.id)
+                    if (ListaResursa[i].id == r.id)
                     {
                         ListaResursa.RemoveAt(i);
                         ListaResursa.Insert(i, ret);

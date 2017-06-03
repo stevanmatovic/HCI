@@ -38,7 +38,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="Sacuvajte" Height="25" HorizontalAlignment="Center" IsDefault="True" Margin="192,43,172,0" Name="sacuvajButton" VerticalAlignment="Top" Width="90" Grid.Row="3" Grid.ColumnSpan="2" Click="sacuvajButton_Click" />
+        <Button Content="Sačuvaj" Height="25" HorizontalAlignment="Center" IsDefault="True" Margin="192,43,172,0" Name="sacuvajButton" VerticalAlignment="Top" Width="90" Grid.Row="3" Grid.ColumnSpan="2" Click="sacuvajButton_Click" />
         <Button Content="Odustanak" Height="23" HorizontalAlignment="Left" Margin="129,46,0,0" Name="button3" VerticalAlignment="Top" Width="75" Grid.Row="3" Grid.Column="1" />
         <xctk:ColorPicker Grid.Row="1" HorizontalAlignment="Left" Margin="0,10,0,0" Name="colorPicker" VerticalAlignment="Top" Width="138" Grid.Column="1" />
     </Grid>

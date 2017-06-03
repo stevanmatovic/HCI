@@ -57,7 +57,7 @@ namespace WpfApplication1
         {
             Resurs l = (Resurs)lokaliGrid.SelectedItem;
             IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
-            ipl.inicijalizujLokalZaEdit(l);
+            ipl.inicijalizujResursZaEdit(l);
             Resurs ret = ipl.vratiIzmenjen();
 
             if (l != null)

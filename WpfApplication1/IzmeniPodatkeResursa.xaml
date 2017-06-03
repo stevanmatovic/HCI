@@ -35,32 +35,31 @@
         <Label Content="Moguća eksploatacija:" Grid.RowSpan="2" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="label11" VerticalAlignment="Top" Grid.Row="8" Grid.ColumnSpan="4" />
         <Label Content="Opis resursa:" HorizontalAlignment="Left" Margin="12,0,0,8" Name="label13" Grid.Row="3" />
         <WrapPanel Grid.Column="1" Grid.Row="6" Height="28" HorizontalAlignment="Left" Name="wrapPanel1" VerticalAlignment="Top" Width="342" Margin="8,5,0,0">
-            <RadioButton Content="Dostupno         " Height="16" Name="daInvalidi" />
-            <RadioButton Content="Nedostupno" Height="16" Name="neInvalidi" HorizontalAlignment="Right" />
+            <RadioButton Content="Da         " Height="16" Name="daVazan" />
+            <RadioButton Content="Ne" Height="16" Name="neVazan" HorizontalAlignment="Right" />
         </WrapPanel>
         <WrapPanel Height="28" Name="wrapPanel3" Grid.Column="1" Margin="7,5,9,5" Grid.Row="7">
-            <RadioButton Content="Dozvoljeno       " Height="16" Name="daPusenje" />
-            <RadioButton Content="Nedozvoljeno" Height="16" HorizontalAlignment="Right" Name="nePusenje" />
+            <RadioButton Content="Da         " Height="16" Name="daObnovljiv" />
+            <RadioButton Content="Ne" Height="16" HorizontalAlignment="Right" Name="neObnovljiv" />
         </WrapPanel>
         <WrapPanel Height="28" Name="wrapPanel4" Grid.Column="1" Margin="8,5,8,4" Grid.Row="8">
-            <RadioButton Content="Prihvata            " Height="16" Name="daRezervacije" />
-            <RadioButton Content="Ne prihvata" Height="16" HorizontalAlignment="Right" Name="neRezervacije" />
+            <RadioButton Content="Da         " Height="16" Name="daEksploatacija" />
+            <RadioButton Content="Ne" Height="16" HorizontalAlignment="Right" Name="neEksploatacija" />
         </WrapPanel>
         <TextBox Grid.Column="4" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="16,3,0,0" Name="textBox1" VerticalAlignment="Top" Width="306" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="imeLokala" VerticalAlignment="Top" Width="330" Grid.Column="1" Grid.Row="2" Text="{Binding Path=Ime,UpdateSourceTrigger=PropertyChanged}" />
         <ComboBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="alkOK" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox2_SelectionChanged">
-            <ComboBoxItem Content="Ne sluzi" Name="neSluzi" />
-            <ComboBoxItem Content="Sluzi do 23:00" Name="sluzi23" />
-            <ComboBoxItem Content="Sluzi kasno nocu" Name="sluziKasno" />
+            <ComboBoxItem Content="Redak" Name="redak" />
+            <ComboBoxItem Content="Čest" Name="cest" />
+            <ComboBoxItem Content="Univerzalan" Name="univerzalan" />
             <ComboBoxItem />
         </ComboBox>
         <ComboBox Grid.Column="1" Grid.Row="9" Height="23" HorizontalAlignment="Left" Margin="8,6,0,0" Name="cenaKat" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox3_SelectionChanged">
-            <ComboBoxItem Content="Niske cene" Name="niskeCene" />
-            <ComboBoxItem Content="Srednje cene" Name="srednjeCene" />
-            <ComboBoxItem Content="Visoke cene" Name="visokeCene" />
-            <ComboBoxItem Content="Izuzetno visoke cene" Name="izuzetnoVisokeCene" />
+            <ComboBoxItem Content="Merica" Name="merica" />
+            <ComboBoxItem Content="Barel" Name="barel" />
+            <ComboBoxItem Content="Tona" Name="tona" />
+            <ComboBoxItem Content="Kilogram" Name="kilogram" />
         </ComboBox>
-        <TextBox Grid.Column="1" Grid.Row="10" Height="23" HorizontalAlignment="Left" Margin="7,2,0,0" Name="kapacitetBox" VerticalAlignment="Top" Width="330" Text="{Binding Path=Kapacitet,UpdateSourceTrigger=PropertyChanged}" >
+        <TextBox Grid.Column="1" Grid.Row="10" Height="23" HorizontalAlignment="Left" Margin="7,2,0,0" Name="kapacitetBox" VerticalAlignment="Top" Width="330" Text="{Binding Path=Cena,UpdateSourceTrigger=PropertyChanged}" >
 
         </TextBox>
 
@@ -70,6 +69,7 @@
         <Button Content="Odustanak" Height="23" HorizontalAlignment="Left" Margin="213,14,0,0" Name="cancelButton" VerticalAlignment="Top" Width="75" Grid.Column="2" Grid.Row="12" Click="cancelButton_Click" />
         <Label Content="Jedinstvena oznaka resursa:" Height="28" HorizontalAlignment="Left" Margin="12,5,0,0" Name="labelalokal" VerticalAlignment="Top" />
         <TextBox Height="23" Width="330"  HorizontalAlignment="Left" Margin="6,10,0,0" Name="idResursa" VerticalAlignment="Top"  Grid.Column="1" Text="{Binding Path=ID,UpdateSourceTrigger=PropertyChanged}" TextChanged="idResursa_TextChanged" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="imeLokala" VerticalAlignment="Top" Width="330" Grid.Column="1" Grid.Row="2" Text="{Binding Path=Ime,UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="7,8,0,0" Name="opisLokala" VerticalAlignment="Top" Width="330" Grid.Row="3" Grid.Column="1" Text="{Binding Path=Opis,UpdateSourceTrigger=PropertyChanged}" />
         <DataGrid Height="120" HorizontalAlignment="Left" IsReadOnly="True" ItemsSource="{Binding Path=ListaTipova}" Margin="8,0,0,0" Name="tabelaTipova" SelectedItem="{Binding Path=SelectedTip, Mode=OneWay}" VerticalAlignment="Top" Width="189" Grid.Column="1" Grid.Row="4" SelectionChanged="tabelaTipova_SelectionChanged" />
         <GroupBox Grid.RowSpan="5"  Height="292" HorizontalAlignment="Left" Margin="26,0,0,0" Name="groupBox3" VerticalAlignment="Top" Width="243" Grid.Column="2" Grid.Row="4">
