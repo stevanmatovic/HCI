@@ -9,17 +9,17 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace WpfApplication1.DAO
 {
-    public class LokalDAO
+    public class ResursDAO
     {
-        public LokalDAO()
+        public ResursDAO()
         { 
         
         }
 
-        public ObservableCollection<Lokal> ucitajListuLokala()
+        public ObservableCollection<Resurs> ucitajListuResursa()
         {
-            ObservableCollection<Lokal> listaLok = new ObservableCollection<Lokal>();
-            String dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lokali.podaci");
+            ObservableCollection<Resurs> listaResursa = new ObservableCollection<Resurs>();
+            String dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resursi.podaci");
 
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = null;
@@ -29,7 +29,7 @@ namespace WpfApplication1.DAO
                 try
                 {
                     stream = File.Open(dat, FileMode.Open);
-                    listaLok = (ObservableCollection<Lokal>)formatter.Deserialize(stream);
+                    listaResursa = (ObservableCollection<Resurs>)formatter.Deserialize(stream);
                 }
                 catch
                 {
@@ -44,15 +44,15 @@ namespace WpfApplication1.DAO
             }
             else
             {
-                listaLok = new ObservableCollection<Lokal>();
+                listaResursa = new ObservableCollection<Resurs>();
             }
-            return listaLok;
+            return listaResursa;
         }
 
-        public void upisiUFajl(ObservableCollection<Lokal> lista)
+        public void upisiUFajl(ObservableCollection<Resurs> lista)
         {
-            System.IO.File.WriteAllText("lokali.podaci", string.Empty);
-            String dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lokali.podaci");
+            System.IO.File.WriteAllText("resursi.podaci", string.Empty);
+            String dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resursi.podaci");
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = null;
 
@@ -72,13 +72,13 @@ namespace WpfApplication1.DAO
             }
         }
 
-        public void remove(Lokal l)
+        public void remove(Resurs r)
         {
-            ObservableCollection<Lokal> lista = ucitajListuLokala();
-            Lokal zaBrisanje = null;
-            foreach (Lokal lok in lista) {
-                if (lok.id == l.id) {
-                    zaBrisanje = lok;
+            ObservableCollection<Resurs> lista = ucitajListuResursa();
+            Resurs zaBrisanje = null;
+            foreach (Resurs res in lista) {
+                if (res.id == r.id) {
+                    zaBrisanje = res;
                 }
             }
             if (zaBrisanje != null)
@@ -87,9 +87,9 @@ namespace WpfApplication1.DAO
            upisiUFajl(lista);
         }
 
-        public void write(Lokal l) {
-            ObservableCollection<Lokal> lista = ucitajListuLokala();
-            lista.Add(l);
+        public void write(Resurs r) {
+            ObservableCollection<Resurs> lista = ucitajListuResursa();
+            lista.Add(r);
             upisiUFajl(lista);
         }
     }

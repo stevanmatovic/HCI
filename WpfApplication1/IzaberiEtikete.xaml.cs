@@ -40,7 +40,7 @@ namespace WpfApplication1
             } 
   */
   //          List<Etiketa> tempList = new List<Etiketa>();
-            if (parentMW.izabraniLokal.listaEtiketaLokala.Count < 1)
+            if (parentMW.izabraniResurs.listaEtiketaResursa.Count < 1)
             {
                 foreach (Etiketa e in parentMW.ListaEtiketa)
                 {
@@ -51,7 +51,7 @@ namespace WpfApplication1
             {
                 foreach (Etiketa e in parentMW.ListaEtiketa)
                 {
-                    foreach (Etiketa izabE in parentMW.izabraniLokal.listaEtiketaLokala)
+                    foreach (Etiketa izabE in parentMW.izabraniResurs.listaEtiketaResursa)
                     {
                         if (izabE.id != e.id)
                         {
@@ -75,15 +75,15 @@ namespace WpfApplication1
                 }
             }
 
-            for (int i = 0; i < parentMW.ListaLokala.Count; i++)
+            for (int i = 0; i < parentMW.ListaResursa.Count; i++)
             {
-                if (parentMW.izabraniLokal.id == parentMW.ListaLokala[i].id)
+                if (parentMW.izabraniResurs.id == parentMW.ListaResursa[i].id)
                 {
-                    parentMW.ListaLokala[i].listaEtiketaLokala.InsertRange(parentMW.ListaLokala[i].listaEtiketaLokala.Count, tempLista);
+                    parentMW.ListaResursa[i].listaEtiketaResursa.InsertRange(parentMW.ListaResursa[i].listaEtiketaResursa.Count, tempLista);
                 }
             }
 
-            parentMW.daoLokal.upisiUFajl(parentMW.ListaLokala);
+            parentMW.daoLokal.upisiUFajl(parentMW.ListaResursa);
 
             this.Close();
         }    

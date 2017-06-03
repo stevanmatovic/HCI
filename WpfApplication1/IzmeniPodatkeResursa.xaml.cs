@@ -20,10 +20,10 @@ namespace WpfApplication1
     /// <summary>
     /// Interaction logic for IzmeniPodatkeLokala.xaml
     /// </summary>
-    public partial class IzmeniPodatkeLokala : Window, INotifyPropertyChanged
+    public partial class IzmeniPodatkeResursa : Window, INotifyPropertyChanged
     {
 
-        private Lokal retLokal;
+        private Resurs retResurs;
         private TabelarniPrikaz parent;
         private MainWindow parentMW;
         
@@ -31,18 +31,18 @@ namespace WpfApplication1
         private string _id;
         private string _opis;
         private string _tip;
-        private string _alkohol;
-        private string _cenaKat;
-        private string _kapacitet;
-        private string _invalidi;
-        private string _pusenje;
-        private string _rezervacije;
-        private string _datumOtvaranja;
+        private string _frekvencija;
+        private string _mera;
+        private string _cena;
+        private string _strateski;
+        private string _obnovljiv;
+        private string _eksploatacija;
+        private string _datumOtkrivanja;
         private string _uriLocation;
 
         private TipDAO dao;
-        public ObservableCollection<TipLokala> ListaTipova { get; set; }
-        public TipLokala SelectedTip { get; set; }
+        public ObservableCollection<TipResursa> ListaTipova { get; set; }
+        public TipResursa SelectedTip { get; set; }
 
         public DialogResult DialogResult { get; set; }
 
@@ -111,13 +111,13 @@ namespace WpfApplication1
         {
             get
             {
-                return _alkohol;
+                return _frekvencija;
             }
             set
             {
-                if (!value.Equals(_alkohol))
+                if (!value.Equals(_frekvencija))
                 {
-                    _alkohol = value;
+                    _frekvencija = value;
                     OnPropertyChanged("Alkohol");
                 }
             }
@@ -126,13 +126,13 @@ namespace WpfApplication1
         {
             get
             {
-                return _kapacitet;
+                return _cena;
             }
             set
             {
-                if (!value.Equals(_kapacitet))
+                if (!value.Equals(_cena))
                 {
-                    _kapacitet = value;
+                    _cena = value;
                     OnPropertyChanged("Kapacitet");
                 }
             }
@@ -149,19 +149,19 @@ namespace WpfApplication1
             }
         }
 
-        public IzmeniPodatkeLokala(TabelarniPrikaz tp)
+        public IzmeniPodatkeResursa(TabelarniPrikaz tp)
         {
             InitializeComponent();
             this.DataContext = this;
 
-            retLokal = new Lokal();
+            retResurs = new Resurs();
             parent = tp;
             dao = new TipDAO();
             ListaTipova = dao.ucitajListuTipova();
         }
   
 
-        public IzmeniPodatkeLokala(MainWindow mw)
+        public IzmeniPodatkeResursa(MainWindow mw)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -171,10 +171,10 @@ namespace WpfApplication1
             ListaTipova = dao.ucitajListuTipova();
         }
 
-        public void inicijalizujLokalZaEdit(Lokal izabraniLokal)
+        public void inicijalizujLokalZaEdit(Resurs izabraniResurs)
         {
-            retLokal = izabraniLokal;
-            if (izabraniLokal == null)
+            retResurs = izabraniResurs;
+            if (izabraniResurs == null)
             {
                 MessageBox mb = new MessageBox("Morate izabrati lokal za izmenu.");
                 mb.Show();
@@ -182,23 +182,23 @@ namespace WpfApplication1
             else
             {
 
-                this._id = izabraniLokal.id;
-                this._ime = izabraniLokal.ime;
-                this._opis = izabraniLokal.opis;
-                this._kapacitet = izabraniLokal.kapacitet;
-                this._uriLocation = izabraniLokal.imagePath;
+                this._id = izabraniResurs.id;
+                this._ime = izabraniResurs.ime;
+                this._opis = izabraniResurs.opis;
+                this._cena = izabraniResurs.cena;
+                this._uriLocation = izabraniResurs.imagePath;
                 
-                this._tip = izabraniLokal.tip;
+                this._tip = izabraniResurs.tip;
     
-                this._alkohol = izabraniLokal.alkoholCB;
-                this._cenaKat = izabraniLokal.cenaKategorija;
+                this._frekvencija = izabraniResurs.frekvencijaCB;
+                this._mera = izabraniResurs.mera;
 
                 #region setCBParams
-                if (_alkohol.Equals("Sluzi kasno nocu"))
+                if (_frekvencija.Equals("Sluzi kasno nocu"))
                 {
                     sluziKasno.IsSelected = true;
                 }
-                else if (_alkohol.Equals("Sluzi do 23:00"))
+                else if (_frekvencija.Equals("Sluzi do 23:00"))
                 {
                     sluzi23.IsSelected = true;
                 }
@@ -208,15 +208,15 @@ namespace WpfApplication1
                 }
 
 
-                if (_cenaKat.Equals("Niske cene"))
+                if (_mera.Equals("Niske cene"))
                 {
                     niskeCene.IsSelected = true;
                 }
-                else if (_cenaKat.Equals("Srednje cene"))
+                else if (_mera.Equals("Srednje cene"))
                 {
                     srednjeCene.IsSelected = true;
                 }
-                else if (_cenaKat.Equals("Visoke cene"))
+                else if (_mera.Equals("Visoke cene"))
                 {
                     visokeCene.IsSelected = true;
                 }
@@ -226,11 +226,11 @@ namespace WpfApplication1
                 }
                 #endregion
 
-                this._invalidi = izabraniLokal.invalidiOK;
-                this._pusenje = izabraniLokal.pusenjeOK;
-                this._rezervacije = izabraniLokal.rezervacijeOK;
+                this._strateski = izabraniResurs.strateskiVazan;
+                this._obnovljiv = izabraniResurs.obnovljiv;
+                this._eksploatacija = izabraniResurs.eksploatacija;
                 #region setRadioParams
-                if (_invalidi.Equals("da"))
+                if (_strateski.Equals("da"))
                 {
                     daInvalidi.IsChecked = true;
                 }
@@ -240,7 +240,7 @@ namespace WpfApplication1
                 }
 
 
-                if (_pusenje.Equals("da"))
+                if (_obnovljiv.Equals("da"))
                 {
                     daPusenje.IsChecked = true;
                 }
@@ -250,7 +250,7 @@ namespace WpfApplication1
                 }
 
 
-                if (_rezervacije.Equals("da"))
+                if (_eksploatacija.Equals("da"))
                 {
                     daRezervacije.IsChecked = true;
                 }
@@ -260,9 +260,9 @@ namespace WpfApplication1
                 }
                 #endregion
 
-                this._datumOtvaranja = izabraniLokal.datumOtvaranja;
+                this._datumOtkrivanja = izabraniResurs.datumOtkrivanja;
 
-                datumOtvaranja.SelectedDate = DateTime.Parse(_datumOtvaranja);
+                datumOtvaranja.SelectedDate = DateTime.Parse(_datumOtkrivanja);
 
                 izmenjenaSlikaLokala.Source = new BitmapImage(new Uri(_uriLocation));
                
@@ -270,9 +270,9 @@ namespace WpfApplication1
 
             }
         }
-        public Lokal vratiIzmenjen()
+        public Resurs vratiIzmenjen()
         {
-            return retLokal;
+            return retResurs;
         }
        
         private void tipLokala_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -292,97 +292,94 @@ namespace WpfApplication1
 
         private void sacuvajLokal_Click(object sender, RoutedEventArgs e)
         {
-                retLokal.id = _id;
-                retLokal.ime = _ime;
-                retLokal.opis = _opis;
-                retLokal.tip = _tip;
-                retLokal.kapacitet = _kapacitet;
-                retLokal.imagePath = _uriLocation;
+                retResurs.id = _id;
+                retResurs.ime = _ime;
+                retResurs.opis = _opis;
+                retResurs.tip = _tip;
+                retResurs.cena = _cena;
+                retResurs.imagePath = _uriLocation;
 
                 int day = datumOtvaranja.SelectedDate.Value.Day;
                 int month = datumOtvaranja.SelectedDate.Value.Month;
                 int year = datumOtvaranja.SelectedDate.Value.Year;
 
-                retLokal.datumOtvaranja = "" + day + "." + month + "." + year; 
+                retResurs.datumOtkrivanja = "" + day + "." + month + "." + year; 
                 
                 #region setRadioButtons
                 if (daInvalidi.IsChecked == true)
                 {
-                    retLokal.invalidiOK = "da";
+                    retResurs.strateskiVazan = "da";
                 }
                 else
                 {
-                    retLokal.invalidiOK = "ne";
+                    retResurs.strateskiVazan = "ne";
                 }
 
                 if (daPusenje.IsChecked == true)
                 {
-                    retLokal.pusenjeOK = "da";
+                    retResurs.obnovljiv = "da";
                 }
                 else
                 {
-                    retLokal.pusenjeOK = "ne";
+                    retResurs.obnovljiv = "ne";
                 }
 
                 if (daRezervacije.IsChecked == true)
                 {
-                    retLokal.rezervacijeOK = "da";
+                    retResurs.eksploatacija = "da";
                 }
                 else
                 {
-                    retLokal.rezervacijeOK = "ne";
+                    retResurs.eksploatacija = "ne";
                 }
                 #endregion
                 #region setCB
 
                 if (neSluzi.IsSelected == true)
                 {
-                    retLokal.alkoholCB = "Ne sluzi";
+                    retResurs.frekvencijaCB = "Ne sluzi";
                 }
                 else if (sluzi23.IsSelected == true)
                 {
-                    retLokal.alkoholCB = "Sluzi do 23:00";
+                    retResurs.frekvencijaCB = "Sluzi do 23:00";
                 }
                 else
                 {
-                    retLokal.alkoholCB = "Sluzi kasno nocu";
+                    retResurs.frekvencijaCB = "Sluzi kasno nocu";
                 }
 
                 if (niskeCene.IsSelected == true)
                 {
-                    retLokal.cenaKategorija = "Niske cene";
+                    retResurs.mera = "Niske cene";
                 }
                 else if (srednjeCene.IsSelected == true)
                 {
-                    retLokal.cenaKategorija = "Srednje cene";
+                    retResurs.mera = "Srednje cene";
                 }
                 else if (visokeCene.IsSelected == true)
                 {
-                    retLokal.cenaKategorija = "Visoke cene";
+                    retResurs.mera = "Visoke cene";
                 }
                 else
                 {
-                    retLokal.cenaKategorija = "Izuzetno visoke cene";
+                    retResurs.mera = "Izuzetno visoke cene";
                 }
                 #endregion
 
-                for (int i = 0; i < parentMW.ListaLokala.Count; i++)
+                for (int i = 0; i < parentMW.ListaResursa.Count; i++)
                 {
-                    if (parentMW.ListaLokala[i].id == retLokal.id)
+                    if (parentMW.ListaResursa[i].id == retResurs.id)
                     {
-                        parentMW.ListaLokala.RemoveAt(i);
-                        parentMW.ListaLokala.Insert(i, retLokal);
+                        parentMW.ListaResursa.RemoveAt(i);
+                        parentMW.ListaResursa.Insert(i, retResurs);
                     }
                 }
-                parentMW.daoLokal.upisiUFajl(parentMW.ListaLokala);
+                parentMW.daoLokal.upisiUFajl(parentMW.ListaResursa);
 
                 this.Close();           
         }
 
-        private void idLokala_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
+        
 
         private void izaberiSlikuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -407,9 +404,14 @@ namespace WpfApplication1
 
         private void tabelaTipova_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TipLokala tl = (TipLokala)tabelaTipova.SelectedItem;
+            TipResursa tl = (TipResursa)tabelaTipova.SelectedItem;
             izmenjenaSlikaLokala.Source = new BitmapImage(new Uri(tl.slikaPath));
             this._uriLocation = tl.slikaPath;
+        }
+
+        private void idResursa_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

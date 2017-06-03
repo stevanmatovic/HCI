@@ -27,7 +27,7 @@ namespace WpfApplication1
         private string _opis;
         private string _uriLocation;
 
-        private TipLokala retTip;
+        private TipResursa retTip;
 
         private Tipovi parent;
 
@@ -93,11 +93,11 @@ namespace WpfApplication1
         {
             InitializeComponent();
             this.DataContext = this;
-            retTip = new TipLokala();
+            retTip = new TipResursa();
             parentMW = mw;
         }
 
-        public void inicijalizujTipZaEdit(TipLokala izabraniTip)
+        public void inicijalizujTipZaEdit(TipResursa izabraniTip)
         {
             retTip = izabraniTip;
             if (izabraniTip == null)
@@ -149,7 +149,7 @@ namespace WpfApplication1
             this.Close();           
         }
 
-        public TipLokala vratiIzmenjen()
+        public TipResursa vratiIzmenjen()
         {
             return retTip;
         }

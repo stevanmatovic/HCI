@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 namespace WpfApplication1
 {
     [Serializable]
-    public class TipLokala
+    public class TipResursa
     {
         public String id { get; set; }
         public String ime { get; set; }
@@ -15,12 +15,12 @@ namespace WpfApplication1
         public String slikaPath { get; set; }
         
 
-        public TipLokala() 
+        public TipResursa() 
         {
         
         }
         
-        public TipLokala(TipLokala tl)
+        public TipResursa(TipResursa tl)
         {
             this.id = tl.id;
             this.ime = tl.ime;
@@ -28,7 +28,7 @@ namespace WpfApplication1
             this.slikaPath = tl.slikaPath;
         }
 
-        public TipLokala(String id, String ime, String opis, String slikaPath)
+        public TipResursa(String id, String ime, String opis, String slikaPath)
         {
             this.id = id;
             this.ime = ime;

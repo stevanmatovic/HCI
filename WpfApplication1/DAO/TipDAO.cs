@@ -16,9 +16,9 @@ namespace WpfApplication1.DAO
         
         }
 
-        public ObservableCollection<TipLokala> ucitajListuTipova()
+        public ObservableCollection<TipResursa> ucitajListuTipova()
         {
-            ObservableCollection<TipLokala> listaTipova = new ObservableCollection<TipLokala>();
+            ObservableCollection<TipResursa> listaTipova = new ObservableCollection<TipResursa>();
             String dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tipovi.podaci");
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -29,7 +29,7 @@ namespace WpfApplication1.DAO
                 try
                 {
                     stream = File.Open(dat, FileMode.Open);
-                    listaTipova = (ObservableCollection<TipLokala>)formatter.Deserialize(stream);
+                    listaTipova = (ObservableCollection<TipResursa>)formatter.Deserialize(stream);
                 }
                 catch
                 {
@@ -44,12 +44,12 @@ namespace WpfApplication1.DAO
             }
             else
             {
-                listaTipova = new ObservableCollection<TipLokala>();
+                listaTipova = new ObservableCollection<TipResursa>();
             }
             return listaTipova;
         }
 
-        public void upisiUFajl(ObservableCollection<TipLokala> list)
+        public void upisiUFajl(ObservableCollection<TipResursa> list)
         {
             string dat = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tipovi.podaci");
             BinaryFormatter formatter = new BinaryFormatter();

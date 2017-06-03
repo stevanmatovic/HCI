@@ -20,8 +20,8 @@ namespace WpfApplication1
     /// </summary>
     public partial class Tipovi : Window
     {
-        public ObservableCollection<TipLokala> ListaTipova { get; set; }
-        public TipLokala SelectedTip { get; set; }
+        public ObservableCollection<TipResursa> ListaTipova { get; set; }
+        public TipResursa SelectedTip { get; set; }
         public TipDAO dao;
         
         public Tipovi()
@@ -35,10 +35,10 @@ namespace WpfApplication1
 
         private void izmeniTipButton_Click(object sender, RoutedEventArgs e)
         {
-            TipLokala tipIzmena = (TipLokala)tabelaTipova.SelectedItem;
+            TipResursa tipIzmena = (TipResursa)tabelaTipova.SelectedItem;
             IzmeniTipLokala itl = new IzmeniTipLokala(this);
             itl.inicijalizujTipZaEdit(tipIzmena);
-            TipLokala ret = itl.vratiIzmenjen();
+            TipResursa ret = itl.vratiIzmenjen();
             if (tipIzmena != null)
             {
                 for (int i = 0; i < ListaTipova.Count; i++)
@@ -55,7 +55,7 @@ namespace WpfApplication1
 
         private void izbrisiTipButton_Click(object sender, RoutedEventArgs e)
         {
-            TipLokala tl = (TipLokala)tabelaTipova.SelectedItem;
+            TipResursa tl = (TipResursa)tabelaTipova.SelectedItem;
             if (tl != null)
             {
                 izbrisiTipIzListe(tl);
@@ -67,7 +67,7 @@ namespace WpfApplication1
             }
         }
 
-        private void izbrisiTipIzListe(TipLokala tl)
+        private void izbrisiTipIzListe(TipResursa tl)
         {
             if (ListaTipova != null)
             {

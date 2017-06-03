@@ -27,7 +27,7 @@ namespace WpfApplication1
         private string opisTipa;
 
         private MainWindow parent;
-        ObservableCollection<TipLokala> listaTipovaParent;
+        ObservableCollection<TipResursa> listaTipovaParent;
 
         public DialogResult DialogResult { get; set; }
         
@@ -78,7 +78,7 @@ namespace WpfApplication1
             }
             else
             {
-                TipLokala tipL = new TipLokala
+                TipResursa tipL = new TipResursa
                 {
                     id = idTipa, 
                     ime = nazivTipa,
@@ -86,7 +86,7 @@ namespace WpfApplication1
                     slikaPath = uriLocation
                 };
 
-                ObservableCollection<TipLokala> listaTipova = dao.ucitajListuTipova();
+                ObservableCollection<TipResursa> listaTipova = dao.ucitajListuTipova();
                 listaTipova.Add(tipL);
                 listaTipovaParent.Add(tipL);
                

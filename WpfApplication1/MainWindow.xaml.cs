@@ -21,19 +21,19 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Lokal izabraniLokal { get; set; }
+        public Resurs izabraniResurs { get; set; }
         public ObservableCollection<Etiketa> EtiketeIzabranog { get; set; }
 
-        public ObservableCollection<Lokal> ListaLokala { get; set; }
-        public LokalDAO daoLokal;
+        public ObservableCollection<Resurs> ListaResursa { get; set; }
+        public ResursDAO daoLokal;
 
-        public ObservableCollection<TipLokala> ListaTipova { get; set; }
+        public ObservableCollection<TipResursa> ListaTipova { get; set; }
         public TipDAO daoTip;
 
         public ObservableCollection<Etiketa> ListaEtiketa { get; set; }
         public EtiketaDAO daoEtiketa;
 
-        public static Dictionary<Image, Lokal> lokaliNaMapi { get; set; }
+        public static Dictionary<Image, Resurs> lokaliNaMapi { get; set; }
 
         Point startPoint = new Point();
 
@@ -47,8 +47,8 @@ namespace WpfApplication1
             imeIzabranogLokala.Text = "";
             tipIzabranogLokala.Text = "";
 
-            daoLokal = new LokalDAO();
-            ListaLokala = daoLokal.ucitajListuLokala();
+            daoLokal = new ResursDAO();
+            ListaResursa = daoLokal.ucitajListuResursa();
 
             daoTip = new TipDAO();
             ListaTipova = daoTip.ucitajListuTipova();
@@ -58,7 +58,7 @@ namespace WpfApplication1
           
             EtiketeIzabranog = new ObservableCollection<Etiketa>();
 
-            lokaliNaMapi = new Dictionary<Image, Lokal>();
+            lokaliNaMapi = new Dictionary<Image, Resurs>();
         }
   
         private void tabelarniPrikaz_Click(object sender, RoutedEventArgs e)
@@ -90,35 +90,35 @@ namespace WpfApplication1
             tipTab.Show();
         }
 
-        private void dodajLokalButton_Click(object sender, RoutedEventArgs e)
+        private void dodajResursButton_Click(object sender, RoutedEventArgs e)
         {
             EntryWindow ew = new EntryWindow(this);
             ew.Show();
         }
 
-        private void izmeniLokalButton_Click(object sender, RoutedEventArgs e)
+        private void izmeniResursButton_Click(object sender, RoutedEventArgs e)
         {
-            Lokal l = (Lokal)lokalDataGrid.SelectedItem;
-            IzmeniPodatkeLokala ipl = new IzmeniPodatkeLokala(this);
+            Resurs l = (Resurs)lokalDataGrid.SelectedItem;
+            IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
             ipl.inicijalizujLokalZaEdit(l);
-            Lokal ret = ipl.vratiIzmenjen();
+            Resurs ret = ipl.vratiIzmenjen();
 
             if (l != null)
             {
-                for (int i = 0; i < ListaLokala.Count; i++)
+                for (int i = 0; i < ListaResursa.Count; i++)
                 {
-                    if (ListaLokala[i].id == l.id)
+                    if (ListaResursa[i].id == l.id)
                     {
-                        ListaLokala.RemoveAt(i);
-                        ListaLokala.Insert(i, ret);
+                        ListaResursa.RemoveAt(i);
+                        ListaResursa.Insert(i, ret);
                     }
                 }
             }
         }
 
-        private void izbrisiLokalButton_Click(object sender, RoutedEventArgs e)
+        private void izbrisiResursButton_Click(object sender, RoutedEventArgs e)
         {
-            Lokal l = (Lokal)lokalDataGrid.SelectedItem;
+            Resurs l = (Resurs)lokalDataGrid.SelectedItem;
             if (l != null)
             {
                 izbrisiLokalIzListe(l.id);
@@ -132,20 +132,20 @@ namespace WpfApplication1
 
         public void izbrisiLokalIzListe(string id)
         {
-            if (ListaLokala != null)
+            if (ListaResursa != null)
             {
                 if (!id.Equals(""))
                 {
-                    for (int i = 0; i < ListaLokala.Count; i++)
+                    for (int i = 0; i < ListaResursa.Count; i++)
                     {
-                        if ((ListaLokala[i].id).Equals(id))
+                        if ((ListaResursa[i].id).Equals(id))
                         {
-                            ListaLokala.RemoveAt(i);
+                            ListaResursa.RemoveAt(i);
                         }
                     }
                 }
             }
-            daoLokal.upisiUFajl(ListaLokala);
+            daoLokal.upisiUFajl(ListaResursa);
         }
 
         private void dodajTipButton_Click(object sender, RoutedEventArgs e)
@@ -156,10 +156,10 @@ namespace WpfApplication1
 
         private void izmeniTipButton_Click(object sender, RoutedEventArgs e)
         {
-            TipLokala tipIzmena = (TipLokala)tipoviDataGrid.SelectedItem;
+            TipResursa tipIzmena = (TipResursa)tipoviDataGrid.SelectedItem;
             IzmeniTipLokala itl = new IzmeniTipLokala(this);
             itl.inicijalizujTipZaEdit(tipIzmena);
-            TipLokala ret = itl.vratiIzmenjen();
+            TipResursa ret = itl.vratiIzmenjen();
             if (tipIzmena != null)
             {
                 for (int i = 0; i < ListaTipova.Count; i++)
@@ -178,17 +178,17 @@ namespace WpfApplication1
             List<string> idLokalaZaBrisanje = new List<string>();
             int counter = 0;
             
-            TipLokala tl = (TipLokala)tipoviDataGrid.SelectedItem;
+            TipResursa tl = (TipResursa)tipoviDataGrid.SelectedItem;
             string idTipa = tl.id;
             if (tl != null)
             {
-                for (int i = 0; i < ListaLokala.Count; i++)
+                for (int i = 0; i < ListaResursa.Count; i++)
                 {
-                    string idTipaLokala = ListaLokala[i].tipLokala.id;
+                    string idTipaLokala = ListaResursa[i].tipResursa.id;
                     if (idTipaLokala.Equals(idTipa))
                     {
                         counter++;
-                        idLokalaZaBrisanje.Add(ListaLokala[i].id);
+                        idLokalaZaBrisanje.Add(ListaResursa[i].id);
                     } 
                 }
 
@@ -209,7 +209,7 @@ namespace WpfApplication1
             }
         }
 
-        public void izbrisiTipIzListe(TipLokala tl)
+        public void izbrisiTipIzListe(TipResursa tl)
         {
             if (ListaTipova != null)
             {
@@ -288,13 +288,13 @@ namespace WpfApplication1
                         }
                     }
 
-                    for (int i = 0; i < ListaLokala.Count; i++) //svaki lokal               // j - indeks etikete lokala
+                    for (int i = 0; i < ListaResursa.Count; i++) //svaki lokal               // j - indeks etikete lokala
                     {
-                        for (int j = 0; j < ListaLokala[i].listaEtiketaLokala.Count; j++)   //svaka lista etiketa lokala        //ako sadrzi tu etiketu makni                                                                                     
+                        for (int j = 0; j < ListaResursa[i].listaEtiketaResursa.Count; j++)   //svaka lista etiketa lokala        //ako sadrzi tu etiketu makni                                                                                     
                         {
-                            if (ListaLokala[i].listaEtiketaLokala[j].id == e.id)
+                            if (ListaResursa[i].listaEtiketaResursa[j].id == e.id)
                             {
-                                ListaLokala[i].listaEtiketaLokala.RemoveAt(j);
+                                ListaResursa[i].listaEtiketaResursa.RemoveAt(j);
                             }
                         }
                     }
@@ -302,16 +302,16 @@ namespace WpfApplication1
             }
 
             daoEtiketa.upisiUFajl(ListaEtiketa);
-            daoLokal.upisiUFajl(ListaLokala);
+            daoLokal.upisiUFajl(ListaResursa);
         }
 
         // KAD JE LOKAL IZABRAN
         private void lokalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EtiketeIzabranog.Clear();
-            izabraniLokal = (Lokal)lokalDataGrid.SelectedItem;
+            izabraniResurs = (Resurs)lokalDataGrid.SelectedItem;
 
-            if (izabraniLokal == null)
+            if (izabraniResurs == null)
             {
                 slikaIzabranogLokala.Source = null;
                 imeIzabranogLokala.Text = "";
@@ -319,18 +319,18 @@ namespace WpfApplication1
             }
             else
             {
-                if (izabraniLokal.listaEtiketaLokala.Count > 0)
+                if (izabraniResurs.listaEtiketaResursa.Count > 0)
                 {
-                    foreach (Etiketa etik in izabraniLokal.listaEtiketaLokala)
+                    foreach (Etiketa etik in izabraniResurs.listaEtiketaResursa)
                     {
                         EtiketeIzabranog.Add(new Etiketa(etik));
                     }
                 }
 
-                BitmapImage img = new BitmapImage(new Uri(izabraniLokal.imagePath));
+                BitmapImage img = new BitmapImage(new Uri(izabraniResurs.imagePath));
                 slikaIzabranogLokala.Source = img;
-                imeIzabranogLokala.Text = izabraniLokal.ime;
-                tipIzabranogLokala.Text = izabraniLokal.tip;
+                imeIzabranogLokala.Text = izabraniResurs.ime;
+                tipIzabranogLokala.Text = izabraniResurs.tip;
             }
         }
 
@@ -356,21 +356,21 @@ namespace WpfApplication1
 
         private void izbrisiEtiketuIzListe(string idEtik)
         {
-            for (int i = 0; i < ListaLokala.Count; i++)     //brisi iz liste etiketa lokala
+            for (int i = 0; i < ListaResursa.Count; i++)     //brisi iz liste etiketa lokala
             {
-                if (ListaLokala[i].id == izabraniLokal.id)
+                if (ListaResursa[i].id == izabraniResurs.id)
                 {
-                    for (int j = 0; j < ListaLokala[i].listaEtiketaLokala.Count; j++)
+                    for (int j = 0; j < ListaResursa[i].listaEtiketaResursa.Count; j++)
                     {
-                        if (ListaLokala[i].listaEtiketaLokala[j].id == idEtik)
+                        if (ListaResursa[i].listaEtiketaResursa[j].id == idEtik)
                         {
-                            ListaLokala[i].listaEtiketaLokala.RemoveAt(j);
+                            ListaResursa[i].listaEtiketaResursa.RemoveAt(j);
                         }
                     }
                 }
             }
 
-            daoLokal.upisiUFajl(ListaLokala);
+            daoLokal.upisiUFajl(ListaResursa);
 
             for (int i = 0; i < EtiketeIzabranog.Count; i++)        //brisi iz viewa DATAGRID
             {
@@ -449,21 +449,21 @@ namespace WpfApplication1
                 }
             }
             //Spomenik s = spomenici.ElementAt(Tabela.SelectedIndex);
-            Lokal l = ListaLokala.ElementAt(lokalDataGrid.SelectedIndex);
+            Resurs l = ListaResursa.ElementAt(lokalDataGrid.SelectedIndex);
 
             if (!lokaliNaMapi.ContainsKey(imageControl))
             {
                 Canvas.SetLeft(imageControl, e.GetPosition(this.mapa).X - imageControl.Width / 2);
                 Canvas.SetTop(imageControl, e.GetPosition(this.mapa).Y - imageControl.Height / 2);
                 daoLokal.remove(l);
-                ListaLokala = daoLokal.ucitajListuLokala();
+                ListaResursa = daoLokal.ucitajListuResursa();
                 l.naMapi = true;
                 l.left = e.GetPosition(this.mapa).X - imageControl.Width / 2;
                 l.top = e.GetPosition(this.mapa).Y - imageControl.Height / 2;
                 lokaliNaMapi.Remove(imageControl);
                 lokaliNaMapi.Add(imageControl,l);
                 daoLokal.write(l);
-                ListaLokala = daoLokal.ucitajListuLokala();
+                ListaResursa = daoLokal.ucitajListuResursa();
                 imageControl.PreviewMouseLeftButtonDown += imageControl_PreviewMouseLeftButtonDown;
                 imageControl.MouseLeftButtonDown += imageControl_MouseLeftButtonDown;
                 imageControl.MouseRightButtonDown += imageControl_MouseRightButtonDown;
@@ -475,13 +475,13 @@ namespace WpfApplication1
                 Canvas.SetLeft(imageControl, e.GetPosition(this.mapa).X - imageControl.Width / 2);
                 Canvas.SetTop(imageControl, e.GetPosition(this.mapa).Y - imageControl.Height / 2);
                 daoLokal.remove(l);
-                ListaLokala = daoLokal.ucitajListuLokala();
+                ListaResursa = daoLokal.ucitajListuResursa();
                 l.naMapi = true;
                 l.left = e.GetPosition(this.mapa).X - imageControl.Width / 2;
                 l.top = e.GetPosition(this.mapa).Y - imageControl.Height / 2;
                 lokaliNaMapi.Add(imageControl, l);
                 daoLokal.write(l);
-                ListaLokala = daoLokal.ucitajListuLokala();
+                ListaResursa = daoLokal.ucitajListuResursa();
                 /*imageControl.PreviewMouseLeftButtonDown += imageControl_PreviewMouseLeftButtonDown;
                 imageControl.MouseLeftButtonDown += imageControl_MouseLeftButtonDown;
                 imageControl.MouseRightButtonDown += imageControl_MouseRightButtonDown;*/
@@ -520,16 +520,21 @@ namespace WpfApplication1
         private void imageControl_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Image image = e.Source as Image;
-            Lokal l = lokaliNaMapi[image];
+            Resurs l = lokaliNaMapi[image];
             int indeks = -1;
-            foreach (Lokal lokal in ListaLokala) {
+            foreach (Resurs lokal in ListaResursa) {
                 if (lokal.id == l.id) {
-                    indeks = ListaLokala.IndexOf(lokal);
+                    indeks = ListaResursa.IndexOf(lokal);
                     break;
                 }
             }
             //TODO
-            lokalDataGrid.SelectedIndex = ListaLokala.Count -  indeks - 1;
+            lokalDataGrid.SelectedIndex = ListaResursa.Count -  indeks - 1;
+        }
+
+        private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 

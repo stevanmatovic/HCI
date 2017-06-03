@@ -20,27 +20,27 @@ namespace WpfApplication1
     /// </summary>
     public partial class TabelarniPrikaz : Window
     {
-        ObservableCollection<Lokal> listaLokalaParent;
+        ObservableCollection<Resurs> listaLokalaParent;
         
-        public ObservableCollection<Lokal> ListaLokala { get; set; }
-        public Lokal SelectedLokal { get; set; }
-        public LokalDAO dao;
+        public ObservableCollection<Resurs> ListaLokala { get; set; }
+        public Resurs SelectedLokal { get; set; }
+        public ResursDAO dao;
 
         public TabelarniPrikaz(MainWindow mw)
         {
             InitializeComponent();
             this.DataContext = this;
-            dao = new LokalDAO();
+            dao = new ResursDAO();
  
-            ListaLokala = dao.ucitajListuLokala();
-            listaLokalaParent = mw.ListaLokala;
+            ListaLokala = dao.ucitajListuResursa();
+            listaLokalaParent = mw.ListaResursa;
         }
 
 
         private void Izbrisi_Click(object sender, RoutedEventArgs e)
         {
        
-            Lokal l = (Lokal)lokaliGrid.SelectedItem;
+            Resurs l = (Resurs)lokaliGrid.SelectedItem;
             if (l != null)
             {
                 izbrisiLokalIzListe(l);
@@ -55,10 +55,10 @@ namespace WpfApplication1
 
         private void izmeni_Click(object sender, RoutedEventArgs e)
         {
-            Lokal l = (Lokal)lokaliGrid.SelectedItem;
-            IzmeniPodatkeLokala ipl = new IzmeniPodatkeLokala(this);
+            Resurs l = (Resurs)lokaliGrid.SelectedItem;
+            IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
             ipl.inicijalizujLokalZaEdit(l);
-            Lokal ret = ipl.vratiIzmenjen();
+            Resurs ret = ipl.vratiIzmenjen();
 
             if (l != null)
             {
@@ -75,7 +75,7 @@ namespace WpfApplication1
             }           
         }
 
-        private void izbrisiLokalIzListe(Lokal l)
+        private void izbrisiLokalIzListe(Resurs l)
         {
             if (ListaLokala != null)
             {

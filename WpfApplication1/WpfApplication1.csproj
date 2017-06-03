@@ -61,9 +61,9 @@
     </ApplicationDefinition>
     <Compile Include="DAO\EtiketaDAO.cs" />
     <Compile Include="DAO\EtiketeLokalaDAO.cs" />
-    <Compile Include="DAO\LokalDAO.cs" />
+    <Compile Include="DAO\ResursDAO.cs" />
     <Compile Include="DAO\TipDAO.cs" />
-    <Compile Include="Etiketa.cs" />
+    <Compile Include="model\Etiketa.cs" />
     <Compile Include="Etikete.xaml.cs">
       <DependentUpon>Etikete.xaml</DependentUpon>
     </Compile>
@@ -76,14 +76,14 @@
     <Compile Include="IzmeniEtiketu.xaml.cs">
       <DependentUpon>IzmeniEtiketu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IzmeniPodatkeLokala.xaml.cs">
-      <DependentUpon>IzmeniPodatkeLokala.xaml</DependentUpon>
+    <Compile Include="IzmeniPodatkeResursa.xaml.cs">
+      <DependentUpon>IzmeniPodatkeResursa.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IzmeniTipLokala.xaml.cs">
-      <DependentUpon>IzmeniTipLokala.xaml</DependentUpon>
+    <Compile Include="IzmeniTipResursa.xaml.cs">
+      <DependentUpon>IzmeniTipResursa.xaml</DependentUpon>
     </Compile>
     <Compile Include="KapacitetValidationRule.cs" />
-    <Compile Include="Lokal.cs" />
+    <Compile Include="model\Resurs.cs" />
     <Compile Include="Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
     </Compile>
@@ -94,7 +94,7 @@
     <Compile Include="TabelarniPrikaz.xaml.cs">
       <DependentUpon>TabelarniPrikaz.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TipLokala.cs" />
+    <Compile Include="model\TipResursa.cs" />
     <Compile Include="Tipovi.xaml.cs">
       <DependentUpon>Tipovi.xaml</DependentUpon>
     </Compile>
@@ -104,7 +104,7 @@
     <Compile Include="UpozorenjeZaBrisanjeTipa.xaml.cs">
       <DependentUpon>UpozorenjeZaBrisanjeTipa.xaml</DependentUpon>
     </Compile>
-    <Page Include="EntryWindow.xaml">
+    <Page Include="NoviResurs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,11 +124,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="IzmeniPodatkeLokala.xaml">
+    <Page Include="IzmeniPodatkeResursa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="IzmeniTipLokala.xaml">
+    <Page Include="IzmeniTipResursa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,8 +140,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EntryWindow.xaml.cs">
-      <DependentUpon>EntryWindow.xaml</DependentUpon>
+    <Compile Include="NoviResurs.xaml.cs">
+      <DependentUpon>NoviResurs.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

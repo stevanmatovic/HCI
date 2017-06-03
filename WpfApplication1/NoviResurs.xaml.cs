@@ -33,10 +33,10 @@ namespace WpfApplication1
             }
         }
         MainWindow parent;
-        ObservableCollection<Lokal> listaLokalaParent;
+        ObservableCollection<Resurs> listaLokalaParent;
 
-        public ObservableCollection<TipLokala> ListaTipova { get; set; }
-        public TipLokala SelectedTip { get; set; }
+        public ObservableCollection<TipResursa> ListaTipova { get; set; }
+        public TipResursa SelectedTip { get; set; }
         private TipDAO dao;
 
         public DialogResult DialogResult { get; set; }
@@ -133,7 +133,7 @@ namespace WpfApplication1
             this.DataContext = this;
 
             parent = mw;
-            listaLokalaParent = mw.ListaLokala;
+            listaLokalaParent = mw.ListaResursa;
 
             dao = new TipDAO();
             ListaTipova = dao.ucitajListuTipova();
@@ -143,9 +143,9 @@ namespace WpfApplication1
 
         private void sacuvajLokal_Click(object sender, RoutedEventArgs e)
         {
-            LokalDAO lokalDAO = new LokalDAO();
+            ResursDAO lokalDAO = new ResursDAO();
 
-            TipLokala retTip = (TipLokala)tabelaTipova.SelectedItem;
+            TipResursa retTip = (TipResursa)tabelaTipova.SelectedItem;
             String alkL = alkOK.Text;
             String cenaK = cenaKat.Text;
             String invL;
@@ -198,23 +198,23 @@ namespace WpfApplication1
             }
             else 
             {
-                Lokal lokal = new Lokal
+                Resurs lokal = new Resurs
                 {
                     id = _id,
                     ime = _ime,
                     opis = _opis,
                     tip = tipLok,
-                    tipLokala = retTip,
-                    alkoholCB = alkL,
-                    cenaKategorija = cenaK,
-                    invalidiOK = invL,
-                    pusenjeOK = pusL,
-                    rezervacijeOK = rezL,/* cenaKategorija = cenaK,*/
-                    datumOtvaranja = dateL,
-                    kapacitet = _kapacitet.ToString(),
+                    tipResursa = retTip,
+                    frekvencijaCB = alkL,
+                    mera = cenaK,
+                    strateskiVazan = invL,
+                    obnovljiv = pusL,
+                    eksploatacija = rezL,/* cenaKategorija = cenaK,*/
+                    datumOtkrivanja = dateL,
+                    cena = _kapacitet.ToString(),
                     imagePath = _uriLocation
                 };
-                ObservableCollection<Lokal> listaLokala = lokalDAO.ucitajListuLokala();
+                ObservableCollection<Resurs> listaLokala = lokalDAO.ucitajListuResursa();
                 listaLokala.Add(lokal);
                 lokalDAO.upisiUFajl(listaLokala);
 
@@ -244,7 +244,7 @@ namespace WpfApplication1
 
         private void tabelaTipova_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TipLokala izabraniTip = (TipLokala)tabelaTipova.SelectedItem;
+            TipResursa izabraniTip = (TipResursa)tabelaTipova.SelectedItem;
             slikaLokala.Source = new BitmapImage(new Uri(izabraniTip.slikaPath));
             this._uriLocation = izabraniTip.slikaPath;
         }      
