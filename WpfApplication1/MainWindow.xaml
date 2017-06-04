@@ -11,7 +11,7 @@
             <RowDefinition Height="257*" />
             <RowDefinition Height="142*" />
         </Grid.RowDefinitions>
-        <TabControl Height="146" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="742" Background="#4DB6AC" SelectionChanged="tabControl1_SelectionChanged" Grid.ColumnSpan="2" Margin="0,243,0,0" Grid.RowSpan="2">
+        <TabControl Height="142" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="742" Background="#4DB6AC" SelectionChanged="tabControl1_SelectionChanged" Grid.ColumnSpan="2" Margin="0,247,0,0" Grid.RowSpan="2">
             <TabItem Header="Svi resursi" Name="tabItem1">
 
                 <Grid Height="626">
@@ -26,7 +26,7 @@
                         <RowDefinition Height="56*" />
                         <RowDefinition Height="257*" />
                     </Grid.RowDefinitions>
-                    <DataGrid AutoGenerateColumns="False" Height="113" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="105,11,0,0" Name="lokalDataGrid" VerticalAlignment="Top" ItemsSource="{Binding Path=ListaResursa}" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="lokalDataGrid_SelectionChanged" Grid.ColumnSpan="4" Grid.RowSpan="2">
+                    <DataGrid AutoGenerateColumns="False" Height="113" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="105,11,0,0" Name="resursDataGrid" VerticalAlignment="Top" ItemsSource="{Binding Path=ListaResursa}" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserResizeRows="False" SelectionChanged="resursDataGrid_SelectionChanged" Grid.ColumnSpan="4" Grid.RowSpan="2">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Slika" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -106,15 +106,15 @@
                     </DataGrid>
                     <Button Content="Dodaj novu etiketu" Height="23" HorizontalAlignment="Left" Margin="0,11,0,0" Name="dodajEtiketuButton" VerticalAlignment="Top" Width="120" Click="dodajEtiketuButton_Click" Grid.ColumnSpan="2" />
                     <Button Content="Izmeni etiketu" Height="23" HorizontalAlignment="Left" Margin="0,39,0,0" Name="izmeniEtiketuButton" VerticalAlignment="Top" Width="120" Click="izmeniEtiketuButton_Click" Grid.ColumnSpan="2" />
-                    <Button Content="Izbriši etiketu" Height="23" HorizontalAlignment="Right" Margin="0,72,588,0" Name="izbrisiEtiketuButton" VerticalAlignment="Top" Width="120" Click="izbrisiEtiketuButton_Click" Grid.ColumnSpan="2" />
+                    <Button Content="Izbriši etiketu" Height="23" HorizontalAlignment="Right" Margin="0,72,616,0" Name="izbrisiEtiketuButton" VerticalAlignment="Top" Width="120" Click="izbrisiEtiketuButton_Click" Grid.ColumnSpan="2" />
                 </Grid>
             </TabItem>
         </TabControl>
         <Rectangle Fill="#4DB6AC" HorizontalAlignment="Left" Height="208" Margin="522,14,0,0" Stroke="Gray" VerticalAlignment="Top" Width="210" Grid.ColumnSpan="2"/>
-        <Image x:Name="slikaIzabranogLokala" HorizontalAlignment="Left" Height="63" Margin="87,24,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1"/>
-        <TextBox x:Name="imeIzabranogLokala" HorizontalAlignment="Left" Height="22" Margin="535,24,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="tipIzabranogLokala" HorizontalAlignment="Left" Height="24" Margin="535,63,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
-        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" Height="95" HorizontalAlignment="Left" Margin="535,92,0,0" Name="dataGridIzabranogLokala" VerticalAlignment="Top" Width="179" ItemsSource="{Binding Path=EtiketeIzabranog}" Grid.ColumnSpan="2" >
+        <Image x:Name="slikaIzabranogResursa" HorizontalAlignment="Left" Height="63" Margin="87,24,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1"/>
+        <TextBox x:Name="imeIzabranogResursa" HorizontalAlignment="Left" Height="22" Margin="535,24,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tipIzabranogResursa" HorizontalAlignment="Left" Height="24" Margin="535,63,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
+        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" Height="95" HorizontalAlignment="Left" Margin="535,92,0,0" Name="dataGridIzabranogResursa" VerticalAlignment="Top" Width="179" ItemsSource="{Binding Path=EtiketeIzabranog}" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Boja" IsReadOnly="False">
                     <DataGridTemplateColumn.CellTemplate>
@@ -128,12 +128,14 @@
                 <DataGridTextColumn Binding="{Binding opis}" Header="Opis" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Dodaj etiketu" HorizontalAlignment="Left" Margin="83,192,0,0" VerticalAlignment="Top" Width="90" Click="dodajEtiketuIzabranomLokalu_Click" Height="20" Grid.Column="1"/>
-        <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Izbriši etiketu" HorizontalAlignment="Left" Margin="529,192,0,0" VerticalAlignment="Top" Width="90" Click="izbrisiEtiketuIzabranomLokalu_Click" Height="20" Grid.ColumnSpan="2"/>
-        <Canvas HorizontalAlignment="Left" ClipToBounds="True" Name="mapa" Height="244" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True"  Grid.RowSpan="2" MouseLeftButtonDown="mapa_MouseLeftButtonDown" MouseLeftButtonUp="mapa_MouseLeftButtonUp" MouseMove="mapa_MouseMove" >
+        <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Dodaj etiketu" HorizontalAlignment="Left" Margin="83,192,0,0" VerticalAlignment="Top" Width="90" Click="dodajEtiketuIzabranomResursu_Click" Height="20" Grid.Column="1"/>
+        <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Izbriši etiketu" HorizontalAlignment="Left" Margin="529,192,0,0" VerticalAlignment="Top" Width="90" Click="izbrisiEtiketuIzabranomResursu_Click" Height="20" Grid.ColumnSpan="2"/>
+        <Canvas HorizontalAlignment="Left" ClipToBounds="True" Name="mapa" Height="227" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True" MouseLeftButtonDown="mapa_MouseLeftButtonDown" MouseLeftButtonUp="mapa_MouseLeftButtonUp" MouseMove="mapa_MouseMove_1" >
             <Canvas.Background>
                 <ImageBrush ImageSource="C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\Images\mapa.svg" />
             </Canvas.Background>
         </Canvas>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="40,227,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Filtracija" Content="Filtracija" Grid.Column="1" HorizontalAlignment="Left" Margin="40,227,0,0" VerticalAlignment="Top" Width="75" Click="Filtracija_Click"/>
     </Grid>
 </Window>

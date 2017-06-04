@@ -60,9 +60,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAO\EtiketaDAO.cs" />
-    <Compile Include="DAO\MapaDAO.cs" />
     <Compile Include="DAO\ResursDAO.cs" />
     <Compile Include="DAO\TipDAO.cs" />
+    <Compile Include="FilterResurs.cs" />
+    <Compile Include="Filtracija.cs" />
+    <Compile Include="FiltracijaProzor.xaml.cs">
+      <DependentUpon>FiltracijaProzor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HelpProvider.cs" />
+    <Compile Include="HelpViewer.xaml.cs" />
+    <Compile Include="JavaScriptControlHelper.cs" />
     <Compile Include="model\Etiketa.cs" />
     <Compile Include="Etikete.xaml.cs">
       <DependentUpon>Etikete.xaml</DependentUpon>
@@ -84,9 +91,6 @@
     </Compile>
     <Compile Include="KapacitetValidationRule.cs" />
     <Compile Include="model\Resurs.cs" />
-    <Compile Include="Map.xaml.cs">
-      <DependentUpon>Map.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
     </Compile>
@@ -95,7 +99,6 @@
       <DependentUpon>TabelarniPrikaz.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\TipResursa.cs" />
-    <Compile Include="Tacke.cs" />
     <Compile Include="Tipovi.xaml.cs">
       <DependentUpon>Tipovi.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,14 @@
     <Compile Include="UpozorenjeZaBrisanjeTipa.xaml.cs">
       <DependentUpon>UpozorenjeZaBrisanjeTipa.xaml</DependentUpon>
     </Compile>
+    <Page Include="FiltracijaProzor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HelpViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="NoviResurs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,10 +159,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Map.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,7 +210,33 @@
   <ItemGroup>
     <Resource Include="Images\izaberiteSliku1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="help\error.htm" />
+    <Content Include="help\ImeTipa.htm" />
+    <Content Include="help\index.htm" />
+    <Content Include="help\IzmenaImena.htm" />
+    <Content Include="help\IzmenaOpisa.htm" />
+    <Content Include="help\IzmenaOpisaEtikete.htm" />
+    <Content Include="help\IzmenaOznake.htm" />
+    <Content Include="help\IzmenaOznakeEtikete.htm" />
+    <Content Include="help\IzmenaPrihoda.htm" />
+    <Content Include="help\IzmenaSlike.htm" />
+    <Content Include="help\IzmeniImeTipa.htm" />
+    <Content Include="help\IzmeniOpisTipa.htm" />
+    <Content Include="help\IzmeniOznakuTipa.htm" />
+    <Content Include="help\IzmeniSlikuTipa.htm" />
+    <Content Include="help\OpisTipa.htm" />
+    <Content Include="help\OznakaTipa.htm" />
+    <Content Include="help\Pretrazi.htm" />
+    <Content Include="help\SlikaTipa.htm" />
+    <Content Include="help\UnosImenaSpomenika.htm" />
+    <Content Include="help\UnosOpisaSpomenika.htm" />
+    <Content Include="help\UnosOpisaTipa.htm" />
+    <Content Include="help\UnosOznake.htm" />
+    <Content Include="help\UnosOznakeTipa.htm" />
+    <Content Include="help\UnosPrihoda.htm" />
+    <Content Include="help\UnosSlikeSpomenika.htm" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

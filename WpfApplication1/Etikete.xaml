@@ -1,7 +1,11 @@
 ﻿<Window x:Class="WpfApplication1.Etikete"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Etikete" Height="321" Width="523" Background="Gainsboro">
+        xmlns:local="clr-namespace:WpfApplication1"
+        Title="Etikete" Height="321" Width="523" local:HelpProvider.HelpKey="Forma" Background="Gainsboro">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
     <Grid>
         <DataGrid Height="232" ItemsSource="{Binding Path=ListaEtiketa}" SelectedItem="{Binding Path=SelectedEtiketa, Mode=OneWay}" IsReadOnly="True" HorizontalAlignment="Left" Name="tabelaEtiketa" VerticalAlignment="Top" Width="377" />
         <Button Content="Izmeni etiketu" Height="23" HorizontalAlignment="Left" Margin="398,99,0,0" Name="izmeniEtiketuButton" VerticalAlignment="Top" Width="91" Click="izmeniEtiketuButton_Click" />

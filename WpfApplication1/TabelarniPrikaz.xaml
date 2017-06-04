@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="TabelarniPrikaz" Height="321" Width="523" Background="Gainsboro">
     <Grid>
-        <DataGrid x:Name="lokaliGrid" ItemsSource="{Binding Path=ListaLokala}" SelectedItem="{Binding Path=SelectedLokal, Mode=OneWay}" IsReadOnly="True" Margin="0,0,124,50" Height="232"  Width="377" />
+        <DataGrid x:Name="resursiGrid" ItemsSource="{Binding Path=ListaLokala}" SelectedItem="{Binding Path=SelectedLokal, Mode=OneWay}" IsReadOnly="True" Margin="0,0,124,50" Height="232"  Width="377" />
         <Button Content="Izbrisi lokal" Height="23" HorizontalAlignment="Left" Margin="399,147,0,0" Name="Izbrisi" VerticalAlignment="Top" Width="75" Click="Izbrisi_Click" />
         <Button Content="Izmeni lokal" Height="23" HorizontalAlignment="Left" Margin="399,99,0,0" Name="izmeni" VerticalAlignment="Top" Width="75" Click="izmeni_Click" />
         <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="219,247,0,0" Name="okButton" VerticalAlignment="Top" Width="75" IsDefault="True" Click="okButton_Click" />

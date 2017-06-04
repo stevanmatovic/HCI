@@ -21,7 +21,7 @@ namespace WpfApplication1
 
         MainWindow parentMW;
         TipResursa tipL;
-        List<string> lokaliID;
+        List<string> resursiID;
         
         public UpozorenjeZaBrisanjeTipa(MainWindow mw, TipResursa tl, List<string> listaID, int zavisnih)
         {
@@ -31,8 +31,8 @@ namespace WpfApplication1
 
             parentMW = mw;
             tipL = tl;
-            lokaliID = listaID;
-            tekstUpozorenje.Content = "Ako obrisete izabrani tip lokala, bice izbrisan" + (zavisnih == 1 ? " " : "o ") + "i " + zavisnih + " lokal" + (zavisnih == 1 ? " \n" : "a \n") + " koji " + (zavisnih == 1 ? "je" : "su") + " izabranog tipa. \nNastavite sa brisanjem?";
+            resursiID = listaID;
+            tekstUpozorenje.Content = "Ako obrisete izabrani tip resursa, bice izbrisani svi resursi tog tipa";
         }
 
         private void izbrisiTipButton_Click(object sender, RoutedEventArgs e)
@@ -41,11 +41,11 @@ namespace WpfApplication1
 
             for (int i = 0; i < parentMW.ListaResursa.Count; i++)
             {
-                foreach (string id in lokaliID)
+                foreach (string id in resursiID)
                 {
                     if ((parentMW.ListaResursa[i].id).Equals(id))
                     {
-                        parentMW.izbrisiLokalIzListe(id);
+                        parentMW.izbrisiResursIzListe(id);
                     }
                 }
             }

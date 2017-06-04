@@ -19,7 +19,7 @@ namespace WpfApplication1
 {
     /// <summary>
     /// Interaction logic for EtiqWindow.xaml
-    /// </summary>
+    /// </summary> lokal Lokal LOKAL
     public partial class EtiqWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -115,7 +115,17 @@ namespace WpfApplication1
             }
         }
 
-      
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(this);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+
     }
 
     

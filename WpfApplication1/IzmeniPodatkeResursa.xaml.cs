@@ -18,7 +18,6 @@ using System.Windows.Forms;
 namespace WpfApplication1
 {
     /// <summary>
-    /// Interaction logic for IzmeniPodatkeLokala.xaml
     /// </summary>
     public partial class IzmeniPodatkeResursa : Window, INotifyPropertyChanged
     {
@@ -176,7 +175,7 @@ namespace WpfApplication1
             retResurs = izabraniResurs;
             if (izabraniResurs == null)
             {
-                MessageBox mb = new MessageBox("Morate izabrati lokal za izmenu.");
+                MessageBox mb = new MessageBox("Morate izabrati resurs za izmenu.");
                 mb.Show();
             }
             else
@@ -264,7 +263,7 @@ namespace WpfApplication1
 
 
                 datumOtvaranja.SelectedDate = DateTime.Parse(_datumOtkrivanja);
-                izmenjenaSlikaLokala.Source = new BitmapImage(new Uri(_uriLocation));
+                izmenjenaSlikaResursa.Source = new BitmapImage(new Uri(_uriLocation));
                
                 this.Show();
 
@@ -298,6 +297,8 @@ namespace WpfApplication1
                 retResurs.tip = _tip;
                 retResurs.cena = _cena;
                 retResurs.imagePath = _uriLocation;
+
+                
 
                 int day = datumOtvaranja.SelectedDate.Value.Day;
                 int month = datumOtvaranja.SelectedDate.Value.Month;
@@ -376,7 +377,11 @@ namespace WpfApplication1
                 }
                 parentMW.daoResurs.upisiUFajl(parentMW.ListaResursa);
 
-                this.Close();           
+            Canvas mapa = parentMW.getMapa();
+            mapa.Children.Clear();
+            parentMW.ucitajMapu();
+
+            this.Close();           
         }
 
         
@@ -394,7 +399,7 @@ namespace WpfApplication1
                     image = new BitmapImage(new Uri(fileDialog.FileName));
                 }
             }
-            izmenjenaSlikaLokala.Source = image;
+            izmenjenaSlikaResursa.Source = image;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -405,7 +410,7 @@ namespace WpfApplication1
         private void tabelaTipova_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TipResursa tl = (TipResursa)tabelaTipova.SelectedItem;
-            izmenjenaSlikaLokala.Source = new BitmapImage(new Uri(tl.slikaPath));
+            izmenjenaSlikaResursa.Source = new BitmapImage(new Uri(tl.slikaPath));
             this._uriLocation = tl.slikaPath;
         }
 

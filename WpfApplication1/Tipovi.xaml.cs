@@ -36,7 +36,7 @@ namespace WpfApplication1
         private void izmeniTipButton_Click(object sender, RoutedEventArgs e)
         {
             TipResursa tipIzmena = (TipResursa)tabelaTipova.SelectedItem;
-            IzmeniTipLokala itl = new IzmeniTipLokala(this);
+            IzmeniTipResursa itl = new IzmeniTipResursa(this);
             itl.inicijalizujTipZaEdit(tipIzmena);
             TipResursa ret = itl.vratiIzmenjen();
             if (tipIzmena != null)

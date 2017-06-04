@@ -16,9 +16,8 @@ using System.Windows.Forms;
 namespace WpfApplication1
 {
     /// <summary>
-    /// Interaction logic for IzmeniTipLokala.xaml
     /// </summary>
-    public partial class IzmeniTipLokala : Window, INotifyPropertyChanged
+    public partial class IzmeniTipResursa : Window, INotifyPropertyChanged
     {
         private MainWindow parentMW;
 
@@ -81,7 +80,7 @@ namespace WpfApplication1
         }
         #endregion
 
-        public IzmeniTipLokala(Tipovi t)
+        public IzmeniTipResursa(Tipovi t)
         {
             InitializeComponent();
             this.DataContext = this;
@@ -89,7 +88,7 @@ namespace WpfApplication1
             parent = t;
         }
 
-        public IzmeniTipLokala(MainWindow mw)
+        public IzmeniTipResursa(MainWindow mw)
         {
             InitializeComponent();
             this.DataContext = this;

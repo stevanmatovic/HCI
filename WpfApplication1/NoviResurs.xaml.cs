@@ -145,9 +145,9 @@ namespace WpfApplication1
 
         }
 
-        private void sacuvajLokal_Click(object sender, RoutedEventArgs e)
+        private void sacuvajResurs_Click(object sender, RoutedEventArgs e)
         {
-            ResursDAO lokalDAO = new ResursDAO();
+            ResursDAO resursDAO = new ResursDAO();
 
             TipResursa retTip = (TipResursa)tabelaTipova.SelectedItem;
             String frekvencijaL = frekvencijaCB.Text;
@@ -192,7 +192,7 @@ namespace WpfApplication1
             #endregion
             String dateL = datumOtvaranja.SelectedDate.Value.ToShortDateString();
             String uriLoc = _uriLocation;
-            String tipLok = retTip.ime;
+            String tipRes = retTip.ime;
            
             if (idResursa.Text.Equals("") || imeResursa.Text.Equals("") || opisResursa.Text.Equals("") || frekvencijaL.Equals("") || vazan.Equals("") || obnovljivL.Equals("")
                                 || eksploatacijaL.Equals("") || dateL.Equals("") || _cena.ToString().Equals("") || retTip == null)
@@ -207,7 +207,7 @@ namespace WpfApplication1
                     id = _id,
                     ime = _ime,
                     opis = _opis,
-                    tip = tipLok,
+                    tip = tipRes,
                     tipResursa = retTip,
                     frekvencijaCB = frekvencijaL,
                     mera = meraL,
@@ -218,11 +218,11 @@ namespace WpfApplication1
                     cena = _cena.ToString(),
                     imagePath = _uriLocation
                 };
-                ObservableCollection<Resurs> listaLokala = lokalDAO.ucitajListuResursa();
-                listaLokala.Add(resurs);
+                ObservableCollection<Resurs> listaResursa = resursDAO.ucitajListuResursa();
+                listaResursa.Add(resurs);
                 
                 ((MainWindow)parent).dodajSliku(resurs);
-                lokalDAO.upisiUFajl(listaLokala);
+                resursDAO.upisiUFajl(listaResursa);
                 listaResursaParent.Add(resurs);
                 
                 this.Close();
@@ -242,13 +242,13 @@ namespace WpfApplication1
                     image = new BitmapImage(new Uri(fileDialog.FileName));
                 }
             }
-            slikaLokala.Source = image;
+            slikaResursa.Source = image;
         }
 
         private void tabelaTipova_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TipResursa izabraniTip = (TipResursa)tabelaTipova.SelectedItem;
-            slikaLokala.Source = new BitmapImage(new Uri(izabraniTip.slikaPath));
+            slikaResursa.Source = new BitmapImage(new Uri(izabraniTip.slikaPath));
             this._uriLocation = izabraniTip.slikaPath;
         }
 

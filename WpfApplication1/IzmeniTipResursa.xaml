@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfApplication1.IzmeniTipLokala"
+﻿<Window x:Class="WpfApplication1.IzmeniTipResursa"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="IzmeniTipLokala" Height="359" Width="609" BorderBrush="Blue" ResizeMode="NoResize" Background="Gainsboro">

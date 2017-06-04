@@ -20,10 +20,10 @@ namespace WpfApplication1
     /// </summary>
     public partial class TabelarniPrikaz : Window
     {
-        ObservableCollection<Resurs> listaLokalaParent;
+        ObservableCollection<Resurs> listaResursaParent;
         
-        public ObservableCollection<Resurs> ListaLokala { get; set; }
-        public Resurs SelectedLokal { get; set; }
+        public ObservableCollection<Resurs> ListaResursa { get; set; }
+        public Resurs SelectedResurs { get; set; }
         public ResursDAO dao;
 
         public TabelarniPrikaz(MainWindow mw)
@@ -32,22 +32,22 @@ namespace WpfApplication1
             this.DataContext = this;
             dao = new ResursDAO();
  
-            ListaLokala = dao.ucitajListuResursa();
-            listaLokalaParent = mw.ListaResursa;
+            ListaResursa = dao.ucitajListuResursa();
+            listaResursaParent = mw.ListaResursa;
         }
 
 
         private void Izbrisi_Click(object sender, RoutedEventArgs e)
         {
        
-            Resurs l = (Resurs)lokaliGrid.SelectedItem;
+            Resurs l = (Resurs)resursiGrid.SelectedItem;
             if (l != null)
             {
-                izbrisiLokalIzListe(l);
+                izbrisiResursIzListe(l);
             }
             else
             {
-                MessageBox mb = new MessageBox("Morate izabrati lokal za brisanje.");
+                MessageBox mb = new MessageBox("Morate izabrati resurs za brisanje.");
                 mb.Show();
             }
                    
@@ -55,42 +55,42 @@ namespace WpfApplication1
 
         private void izmeni_Click(object sender, RoutedEventArgs e)
         {
-            Resurs l = (Resurs)lokaliGrid.SelectedItem;
+            Resurs l = (Resurs)resursiGrid.SelectedItem;
             IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
             ipl.inicijalizujResursZaEdit(l);
             Resurs ret = ipl.vratiIzmenjen();
 
             if (l != null)
             {
-                for (int i = 0; i < ListaLokala.Count; i++)
+                for (int i = 0; i < ListaResursa.Count; i++)
                 {
-                    if (ListaLokala[i].id == l.id)
+                    if (ListaResursa[i].id == l.id)
                     {
-                        ListaLokala.RemoveAt(i);                       
-                        ListaLokala.Insert(i, ret);
-                        listaLokalaParent.RemoveAt(i);
-                        listaLokalaParent.Insert(i, ret);
+                        ListaResursa.RemoveAt(i);                       
+                        ListaResursa.Insert(i, ret);
+                        listaResursaParent.RemoveAt(i);
+                        listaResursaParent.Insert(i, ret);
                     }
                 }
             }           
         }
 
-        private void izbrisiLokalIzListe(Resurs l)
+        private void izbrisiResursIzListe(Resurs l)
         {
-            if (ListaLokala != null)
+            if (ListaResursa != null)
             {
                 if (l != null)
                 {
-                    for (int i = 0; i < ListaLokala.Count; i++)
+                    for (int i = 0; i < ListaResursa.Count; i++)
                     {
-                        if (ListaLokala[i].id == l.id)
+                        if (ListaResursa[i].id == l.id)
                         {
-                            ListaLokala.RemoveAt(i);
+                            ListaResursa.RemoveAt(i);
                         }
                     }
                 }
             }
-            dao.upisiUFajl(ListaLokala);             
+            dao.upisiUFajl(ListaResursa);             
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)

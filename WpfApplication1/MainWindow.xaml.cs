@@ -16,6 +16,7 @@ using WpfApplication1.DAO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+
 namespace WpfApplication1
 {
     /// <summary>
@@ -35,13 +36,10 @@ namespace WpfApplication1
         public ObservableCollection<Etiketa> ListaEtiketa { get; set; }
         public EtiketaDAO daoEtiketa;
 
-        public List<Tacke> positions = new List<Tacke>();
 
-        public static Dictionary<Image, Resurs> lokaliNaMapi { get; set; }
 
         public static Dictionary<String, Canvas> skladiste = new Dictionary<String, Canvas>();
 
-        private MapaDAO mapaDao;
 
 
         public MainWindow()
@@ -50,9 +48,9 @@ namespace WpfApplication1
             this.DataContext = this;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            slikaIzabranogLokala.Source = null;
-            imeIzabranogLokala.Text = "";
-            tipIzabranogLokala.Text = "";
+            slikaIzabranogResursa.Source = null;
+            imeIzabranogResursa.Text = "";
+            tipIzabranogResursa.Text = "";
 
             daoResurs = new ResursDAO();
             ListaResursa = daoResurs.ucitajListuResursa();
@@ -65,10 +63,8 @@ namespace WpfApplication1
           
             EtiketeIzabranog = new ObservableCollection<Etiketa>();
 
-            lokaliNaMapi = new Dictionary<Image, Resurs>();
 
 
-            mapaDao = new MapaDAO();
 
             ucitajMapu();
            
@@ -80,13 +76,13 @@ namespace WpfApplication1
             tabela.Show();
         }
 
-        private void noviLokalItem_Click(object sender, RoutedEventArgs e)
+        private void noviResursItem_Click(object sender, RoutedEventArgs e)
         {
             EntryWindow ew = new EntryWindow(this);
             ew.Show();
         }
 
-        private void noviTipLokalaItem_Click(object sender, RoutedEventArgs e)
+        private void noviTipResursaItem_Click(object sender, RoutedEventArgs e)
         {
             TypeWindow tw = new TypeWindow(this);
             tw.Show();
@@ -111,7 +107,7 @@ namespace WpfApplication1
 
         private void izmeniResursButton_Click(object sender, RoutedEventArgs e)
         {
-            Resurs r = (Resurs)lokalDataGrid.SelectedItem;
+            Resurs r = (Resurs)resursDataGrid.SelectedItem;
             IzmeniPodatkeResursa ipl = new IzmeniPodatkeResursa(this);
             ipl.inicijalizujResursZaEdit(r);
             Resurs ret = ipl.vratiIzmenjen();
@@ -131,19 +127,21 @@ namespace WpfApplication1
 
         private void izbrisiResursButton_Click(object sender, RoutedEventArgs e)
         {
-            Resurs l = (Resurs)lokalDataGrid.SelectedItem;
-            if (l != null)
+            Resurs r = (Resurs)resursDataGrid.SelectedItem;
+            if (r != null)
             {
-                izbrisiLokalIzListe(l.id);
+                izbrisiResursIzListe(r.id);
+                skladiste[r.id].Visibility = Visibility.Hidden;
+                skladiste.Remove(r.id);
             }
             else
             {
-                MessageBox mb = new MessageBox("Morate izabrati lokal za brisanje.");
+                MessageBox mb = new MessageBox("Morate izabrati resurs za brisanje.");
                 mb.Show();
             }
         }
 
-        public void izbrisiLokalIzListe(string id)
+        public void izbrisiResursIzListe(string id)
         {
             if (ListaResursa != null)
             {
@@ -170,7 +168,7 @@ namespace WpfApplication1
         private void izmeniTipButton_Click(object sender, RoutedEventArgs e)
         {
             TipResursa tipIzmena = (TipResursa)tipoviDataGrid.SelectedItem;
-            IzmeniTipLokala itl = new IzmeniTipLokala(this);
+            IzmeniTipResursa itl = new IzmeniTipResursa(this);
             itl.inicijalizujTipZaEdit(tipIzmena);
             TipResursa ret = itl.vratiIzmenjen();
             if (tipIzmena != null)
@@ -188,26 +186,33 @@ namespace WpfApplication1
 
         private void izbrisiTipButton_Click(object sender, RoutedEventArgs e)
         {
-            List<string> idLokalaZaBrisanje = new List<string>();
+            List<string> idResursaZaBrisanje = new List<string>();
             int counter = 0;
             
             TipResursa tl = (TipResursa)tipoviDataGrid.SelectedItem;
-            string idTipa = tl.id;
+
+            string idTipa = "";
+            if (tl != null)
+            {
+                idTipa = tl.id;
+            }
             if (tl != null)
             {
                 for (int i = 0; i < ListaResursa.Count; i++)
                 {
-                    string idTipaLokala = ListaResursa[i].tipResursa.id;
-                    if (idTipaLokala.Equals(idTipa))
+                    string idTipaResursa = ListaResursa[i].tipResursa.id;
+                    if (idTipaResursa.Equals(idTipa))
                     {
                         counter++;
-                        idLokalaZaBrisanje.Add(ListaResursa[i].id);
+                        idResursaZaBrisanje.Add(ListaResursa[i].id);
+                        skladiste[ListaResursa[i].id].Visibility = Visibility.Hidden;
+                        skladiste.Remove(ListaResursa[i].id);
                     } 
                 }
 
                 if (counter > 0)
                 {
-                    UpozorenjeZaBrisanjeTipa warning = new UpozorenjeZaBrisanjeTipa(this, tl, idLokalaZaBrisanje, counter);
+                    UpozorenjeZaBrisanjeTipa warning = new UpozorenjeZaBrisanjeTipa(this, tl, idResursaZaBrisanje, counter);
                     warning.Show();    
                 }  
                 else
@@ -226,6 +231,8 @@ namespace WpfApplication1
 
         public void ucitajMapu() {
 
+            skladiste.Clear();
+
             foreach (Resurs r in ListaResursa) {
 
                 ImageBrush image = new ImageBrush();
@@ -243,11 +250,15 @@ namespace WpfApplication1
 
                 mapa.Children.Add(c1);
 
+
                 skladiste.Add(r.id, c1);
             }
 
         }
 
+        public Canvas getMapa() {
+            return mapa;
+        }
 
         internal void dodajSliku(Resurs r)
         {
@@ -277,7 +288,6 @@ namespace WpfApplication1
 
             mapa.Children.Add(c1);
 
-            mapaDao.sacuvajMapu(mapa);
             c1.AllowDrop = true;
         }
 
@@ -361,9 +371,9 @@ namespace WpfApplication1
                         }
                     }
 
-                    for (int i = 0; i < ListaResursa.Count; i++) //svaki lokal               // j - indeks etikete lokala
+                    for (int i = 0; i < ListaResursa.Count; i++)               
                     {
-                        for (int j = 0; j < ListaResursa[i].listaEtiketaResursa.Count; j++)   //svaka lista etiketa lokala        //ako sadrzi tu etiketu makni                                                                                     
+                        for (int j = 0; j < ListaResursa[i].listaEtiketaResursa.Count; j++)                                                                                       
                         {
                             if (ListaResursa[i].listaEtiketaResursa[j].id == e.id)
                             {
@@ -378,17 +388,16 @@ namespace WpfApplication1
             daoResurs.upisiUFajl(ListaResursa);
         }
 
-        // KAD JE LOKAL IZABRAN
-        private void lokalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void resursDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             EtiketeIzabranog.Clear();
-            izabraniResurs = (Resurs)lokalDataGrid.SelectedItem;
+            izabraniResurs = (Resurs)resursDataGrid.SelectedItem;
 
             if (izabraniResurs == null)
             {
-                slikaIzabranogLokala.Source = null;
-                imeIzabranogLokala.Text = "";
-                tipIzabranogLokala.Text = "";
+                slikaIzabranogResursa.Source = null;
+                imeIzabranogResursa.Text = "";
+                tipIzabranogResursa.Text = "";
             }
             else
             {
@@ -401,21 +410,21 @@ namespace WpfApplication1
                 }
 
                 BitmapImage img = new BitmapImage(new Uri(izabraniResurs.imagePath));
-                slikaIzabranogLokala.Source = img;
-                imeIzabranogLokala.Text = izabraniResurs.ime;
-                tipIzabranogLokala.Text = izabraniResurs.tip;
+                slikaIzabranogResursa.Source = img;
+                imeIzabranogResursa.Text = izabraniResurs.ime;
+                tipIzabranogResursa.Text = izabraniResurs.tip;
             }
         }
 
-        private void dodajEtiketuIzabranomLokalu_Click(object sender, RoutedEventArgs e)
+        private void dodajEtiketuIzabranomResursu_Click(object sender, RoutedEventArgs e)
         {
             IzaberiEtikete ie = new IzaberiEtikete(this);
             ie.Show();
         }
 
-        private void izbrisiEtiketuIzabranomLokalu_Click(object sender, RoutedEventArgs e)
+        private void izbrisiEtiketuIzabranomResursu_Click(object sender, RoutedEventArgs e)
         {
-            Etiketa eZaBrisanje = (Etiketa)dataGridIzabranogLokala.SelectedItem;
+            Etiketa eZaBrisanje = (Etiketa)dataGridIzabranogResursa.SelectedItem;
             if (eZaBrisanje != null)
             {
                 izbrisiEtiketuIzListe(eZaBrisanje.id);
@@ -429,7 +438,7 @@ namespace WpfApplication1
 
         private void izbrisiEtiketuIzListe(string idEtik)
         {
-            for (int i = 0; i < ListaResursa.Count; i++)     //brisi iz liste etiketa lokala
+            for (int i = 0; i < ListaResursa.Count; i++)     
             {
                 if (ListaResursa[i].id == izabraniResurs.id)
                 {
@@ -482,8 +491,6 @@ namespace WpfApplication1
 
                 String id = skladiste.FirstOrDefault(x => x.Value == draggedImage).Key;
 
-                
-
                 foreach (Resurs r in ListaResursa)
                 {
                     if (r.id == id)
@@ -496,9 +503,6 @@ namespace WpfApplication1
 
                 draggedImage = null;
             }
-            
-            
-
         }
 
         private void mapa_MouseMove(object sender, MouseEventArgs e)
@@ -536,10 +540,6 @@ namespace WpfApplication1
 
         }
 
-        
-
-
-        Point startPoint = new Point();
 
         private void mapa_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
@@ -553,7 +553,38 @@ namespace WpfApplication1
 
         private void mapa_MouseMove_1(object sender, MouseEventArgs e)
         {
+            if (draggedImage != null)
+            {
+                double canvasHeight = mapa.ActualHeight;
+                double canvasWidth = mapa.ActualWidth;
+                var position = e.GetPosition(mapa);
+                var offset = position - startPosition;
+                startPosition = position;
 
+                double newLeft = position.X;
+                double newTop = position.Y;
+
+                if (newLeft < 0)
+                    newLeft = 0;
+                else if (newLeft + draggedImage.ActualWidth > canvasWidth)
+                    newLeft = canvasWidth - draggedImage.ActualWidth;
+
+                if (newTop < 0)
+                    newTop = 0;
+                else if (newTop + draggedImage.ActualHeight > canvasHeight)
+                    newTop = canvasHeight - draggedImage.ActualHeight;
+
+                Canvas.SetLeft(draggedImage, newLeft);
+                Canvas.SetTop(draggedImage, newTop);
+
+
+            }
+        }
+
+        private void Filtracija_Click(object sender, RoutedEventArgs e)
+        {
+            FiltracijaProzor fp = new FiltracijaProzor(this);
+            fp.Show();
         }
     }
 
