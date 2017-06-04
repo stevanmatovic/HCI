@@ -139,6 +139,10 @@ namespace WpfApplication1
             ListaTipova = dao.ucitajListuTipova();
             _uriLocation = "";
 
+            daVazan.IsChecked = true;
+            daObnovljiv.IsChecked = true;
+            daEksploatacija.IsChecked = true;
+
         }
 
         private void sacuvajLokal_Click(object sender, RoutedEventArgs e)
