@@ -61,6 +61,8 @@ namespace WpfApplication1
             EtiketeIzabranog = new ObservableCollection<Etiketa>();
 
             lokaliNaMapi = new Dictionary<Image, Resurs>();
+
+            mapa = mapa;
         }
   
         private void tabelarniPrikaz_Click(object sender, RoutedEventArgs e)
@@ -224,8 +226,8 @@ namespace WpfApplication1
 
             Canvas c1 = new Canvas();
             c1.Background = image;
-            c1.Width = 20;
-            c1.Height = 30;
+            c1.Width = 25;
+            c1.Height = 25;
 
             skladiste.Add(id, c1);
 
@@ -243,9 +245,6 @@ namespace WpfApplication1
 
 
             c1.AllowDrop = true;
-            c1.PreviewMouseLeftButtonDown += this.MojMouseLeftButtonDown;
-            c1.PreviewMouseMove += this.MojMouseMove;
-            c1.PreviewMouseLeftButtonUp += this.MojPreviewMouseLeftButtonUp;
         }
 
         public void izbrisiTipIzListe(TipResursa tl)
@@ -420,104 +419,65 @@ namespace WpfApplication1
             }
         }
 
-        private object movingObject;
-        private double firstXPos, firstYPos;
-        private void MojMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+        Point startPosition; //tacka koja predstavlja startnu poziciju kliknutog widgeta
+        private Canvas draggedImage;
+        private Point mousePosition;
+        
+
+        private void mapa_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var image = e.Source as Canvas;
 
-            Canvas img = sender as Canvas;
-            Canvas canvas = img.Parent as Canvas;
-
-            firstXPos = e.GetPosition(img).X;
-            firstYPos = e.GetPosition(img).Y;
-
-            movingObject = sender;
-
-
-            int top = Canvas.GetZIndex(img);
-            foreach (Canvas child in canvas.Children)
-                if (top < Canvas.GetZIndex(child))
-                    top = Canvas.GetZIndex(child);
-            Canvas.SetZIndex(img, top + 1);
-
-
-
-        }
-        private void MojPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Canvas img = sender as Canvas;
-            Canvas canvas = img.Parent as Canvas;
-
-            movingObject = null;
-
-
-            int top = Canvas.GetZIndex(img);
-            foreach (Canvas child in canvas.Children)
-                if (top > Canvas.GetZIndex(child))
-                    top = Canvas.GetZIndex(child);
-            Canvas.SetZIndex(img, top + 1);
-
-            foreach (String s in skladiste.Keys)
+            if (image != null && mapa.CaptureMouse())
             {
-                if (skladiste[s] == img)
-                {
-                    foreach (Resurs r in ListaResursa)
-                    {
-                        if (r.id == s)
-                        {
-                            r.pozicijaX = X;
-                            r.pozicijaY = Y;
-                        }
-                    }
+                mousePosition = e.GetPosition(mapa);
+                draggedImage = image;
+                Panel.SetZIndex(draggedImage, 1);
+            }
+        }
 
-
-
-                }
-
-
+        private void mapa_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (draggedImage != null)
+            {
+                mapa.ReleaseMouseCapture();
+                Panel.SetZIndex(draggedImage, 0);
+                draggedImage = null;
             }
 
 
         }
 
-
-        double X;
-        double Y;
-        private void MojMouseMove(object sender, MouseEventArgs e)
+        private void mapa_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && sender == movingObject)
+            if (draggedImage != null)
             {
-                Canvas img = sender as Canvas;
-                Canvas canvas = img.Parent as Canvas;
+                double canvasHeight = mapa.ActualHeight;
+                double canvasWidth = mapa.ActualWidth;
+                var position = e.GetPosition(mapa);
+                var offset = position - startPosition;
+                startPosition = position;
 
-                double newLeft = e.GetPosition(canvas).X - firstXPos - canvas.Margin.Left;
+                double newLeft = position.X;
+                double newTop = position.Y;
 
-                if (newLeft > canvas.Margin.Left + canvas.ActualWidth - img.ActualWidth)
-                    newLeft = canvas.Margin.Left + canvas.ActualWidth - img.ActualWidth;
+                if (newLeft < 0)
+                    newLeft = 0;
+                else if (newLeft + draggedImage.ActualWidth > canvasWidth)
+                    newLeft = canvasWidth - draggedImage.ActualWidth;
 
-                else if (newLeft < canvas.Margin.Left)
-                    newLeft = canvas.Margin.Left;
-                img.SetValue(Canvas.LeftProperty, newLeft);
+                if (newTop < 0)
+                    newTop = 0;
+                else if (newTop + draggedImage.ActualHeight > canvasHeight)
+                    newTop = canvasHeight - draggedImage.ActualHeight;
 
-                double newTop = e.GetPosition(canvas).Y - firstYPos - canvas.Margin.Top;
+                Canvas.SetLeft(draggedImage, newLeft);
+                Canvas.SetTop(draggedImage, newTop);
 
-                if (newTop > canvas.Margin.Top + canvas.ActualHeight - img.ActualHeight)
-                    newTop = canvas.Margin.Top + canvas.ActualHeight - img.ActualHeight;
-
-                else if (newTop < canvas.Margin.Top)
-                    newTop = canvas.Margin.Top;
-                img.SetValue(Canvas.TopProperty, newTop);
-
-                X = newLeft;
-                Y = newTop;
 
             }
-
-
-
-
         }
-
 
         private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

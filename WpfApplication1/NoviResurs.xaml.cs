@@ -220,10 +220,7 @@ namespace WpfApplication1
 
                 ((MainWindow)parent).dodajSliku(_uriLocation,_id);
                 
-
                 listaResursaParent.Add(resurs);
-
-                //id
                 
                 this.Close();
             }

@@ -130,7 +130,7 @@
         </DataGrid>
         <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Dodaj etiketu" HorizontalAlignment="Left" Margin="83,192,0,0" VerticalAlignment="Top" Width="90" Click="dodajEtiketuIzabranomLokalu_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Izbriši etiketu" HorizontalAlignment="Left" Margin="529,192,0,0" VerticalAlignment="Top" Width="90" Click="izbrisiEtiketuIzabranomLokalu_Click" Height="20" Grid.ColumnSpan="2"/>
-        <Canvas HorizontalAlignment="Left" Name="mapa" Height="244" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True"  Grid.RowSpan="2">
+        <Canvas HorizontalAlignment="Left" ClipToBounds="True" Name="mapa" Height="244" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True"  Grid.RowSpan="2" MouseLeftButtonDown="mapa_MouseLeftButtonDown" MouseLeftButtonUp="mapa_MouseLeftButtonUp" MouseMove="mapa_MouseMove">
             <Canvas.Background>
                 <ImageBrush ImageSource="C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\Images\mapa.svg" />
             </Canvas.Background>
