@@ -220,10 +220,9 @@ namespace WpfApplication1
                 };
                 ObservableCollection<Resurs> listaLokala = lokalDAO.ucitajListuResursa();
                 listaLokala.Add(resurs);
-                lokalDAO.upisiUFajl(listaLokala);
-
-                ((MainWindow)parent).dodajSliku(_uriLocation,_id);
                 
+                ((MainWindow)parent).dodajSliku(resurs);
+                lokalDAO.upisiUFajl(listaLokala);
                 listaResursaParent.Add(resurs);
                 
                 this.Close();

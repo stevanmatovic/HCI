@@ -8,6 +8,8 @@ namespace WpfApplication1
     [Serializable]
     public class Resurs
     {
+        bool naMapi { get; set; }
+
         public String id { get; set; }
         public String ime { get; set; }
         public String opis { get; set; }
@@ -25,6 +27,7 @@ namespace WpfApplication1
 
         public double pozicijaX { get; set; }
         public double pozicijaY { get; set; }
+ 
 
         public List<Etiketa> listaEtiketaResursa;
 
@@ -49,6 +52,8 @@ namespace WpfApplication1
             this.cena = l.cena;
             this.datumOtkrivanja = l.datumOtkrivanja;
             this.listaEtiketaResursa = l.listaEtiketaResursa;
+            this.naMapi = l.naMapi;
+            
         }
 
 
@@ -67,6 +72,7 @@ namespace WpfApplication1
             this.cena = kap;
             this.datumOtkrivanja = dat;
             this.imagePath = imgPath;
+           
         }
 
 

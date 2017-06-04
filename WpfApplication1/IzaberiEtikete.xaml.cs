@@ -83,7 +83,7 @@ namespace WpfApplication1
                 }
             }
 
-            parentMW.daoLokal.upisiUFajl(parentMW.ListaResursa);
+            parentMW.daoResurs.upisiUFajl(parentMW.ListaResursa);
 
             this.Close();
         }    

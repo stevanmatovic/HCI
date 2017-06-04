@@ -112,8 +112,8 @@
         </TabControl>
         <Rectangle Fill="#4DB6AC" HorizontalAlignment="Left" Height="208" Margin="522,14,0,0" Stroke="Gray" VerticalAlignment="Top" Width="210" Grid.ColumnSpan="2"/>
         <Image x:Name="slikaIzabranogLokala" HorizontalAlignment="Left" Height="63" Margin="87,24,0,0" VerticalAlignment="Top" Width="72" Grid.Column="1"/>
-        <TextBox x:Name="imeIzabranogLokala" HorizontalAlignment="Left" Height="22" Margin="535,24,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="102" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="tipIzabranogLokala" HorizontalAlignment="Left" Height="24" Margin="535,63,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="102" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="imeIzabranogLokala" HorizontalAlignment="Left" Height="22" Margin="535,24,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tipIzabranogLokala" HorizontalAlignment="Left" Height="24" Margin="535,63,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2"/>
         <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" Height="95" HorizontalAlignment="Left" Margin="535,92,0,0" Name="dataGridIzabranogLokala" VerticalAlignment="Top" Width="179" ItemsSource="{Binding Path=EtiketeIzabranog}" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Boja" IsReadOnly="False">
@@ -130,7 +130,7 @@
         </DataGrid>
         <Button x:Name="dodajEtiketuIzabranomLokalu" Content="Dodaj etiketu" HorizontalAlignment="Left" Margin="83,192,0,0" VerticalAlignment="Top" Width="90" Click="dodajEtiketuIzabranomLokalu_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="izbrisiEtiketuIzabranomLokalu" Content="Izbriši etiketu" HorizontalAlignment="Left" Margin="529,192,0,0" VerticalAlignment="Top" Width="90" Click="izbrisiEtiketuIzabranomLokalu_Click" Height="20" Grid.ColumnSpan="2"/>
-        <Canvas HorizontalAlignment="Left" ClipToBounds="True" Name="mapa" Height="244" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True"  Grid.RowSpan="2" MouseLeftButtonDown="mapa_MouseLeftButtonDown" MouseLeftButtonUp="mapa_MouseLeftButtonUp" MouseMove="mapa_MouseMove">
+        <Canvas HorizontalAlignment="Left" ClipToBounds="True" Name="mapa" Height="244" Margin="10,15,0,0" VerticalAlignment="Top" Width="507" AllowDrop="True"  Grid.RowSpan="2" MouseLeftButtonDown="mapa_MouseLeftButtonDown" MouseLeftButtonUp="mapa_MouseLeftButtonUp" MouseMove="mapa_MouseMove" >
             <Canvas.Background>
                 <ImageBrush ImageSource="C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\Images\mapa.svg" />
             </Canvas.Background>

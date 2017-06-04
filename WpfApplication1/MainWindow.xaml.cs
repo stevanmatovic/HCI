@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using WpfApplication1.DAO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace WpfApplication1
 {
@@ -25,7 +27,7 @@ namespace WpfApplication1
         public ObservableCollection<Etiketa> EtiketeIzabranog { get; set; }
 
         public ObservableCollection<Resurs> ListaResursa { get; set; }
-        public ResursDAO daoLokal;
+        public ResursDAO daoResurs;
 
         public ObservableCollection<TipResursa> ListaTipova { get; set; }
         public TipDAO daoTip;
@@ -33,11 +35,14 @@ namespace WpfApplication1
         public ObservableCollection<Etiketa> ListaEtiketa { get; set; }
         public EtiketaDAO daoEtiketa;
 
+        public List<Tacke> positions = new List<Tacke>();
+
         public static Dictionary<Image, Resurs> lokaliNaMapi { get; set; }
 
         public static Dictionary<String, Canvas> skladiste = new Dictionary<String, Canvas>();
 
-        Point startPoint = new Point();
+        private MapaDAO mapaDao;
+
 
         public MainWindow()
         {
@@ -49,8 +54,8 @@ namespace WpfApplication1
             imeIzabranogLokala.Text = "";
             tipIzabranogLokala.Text = "";
 
-            daoLokal = new ResursDAO();
-            ListaResursa = daoLokal.ucitajListuResursa();
+            daoResurs = new ResursDAO();
+            ListaResursa = daoResurs.ucitajListuResursa();
 
             daoTip = new TipDAO();
             ListaTipova = daoTip.ucitajListuTipova();
@@ -62,7 +67,11 @@ namespace WpfApplication1
 
             lokaliNaMapi = new Dictionary<Image, Resurs>();
 
-            mapa = mapa;
+
+            mapaDao = new MapaDAO();
+
+            ucitajMapu();
+           
         }
   
         private void tabelarniPrikaz_Click(object sender, RoutedEventArgs e)
@@ -149,7 +158,7 @@ namespace WpfApplication1
                     }
                 }
             }
-            daoLokal.upisiUFajl(ListaResursa);
+            daoResurs.upisiUFajl(ListaResursa);
         }
 
         private void dodajTipButton_Click(object sender, RoutedEventArgs e)
@@ -214,36 +223,61 @@ namespace WpfApplication1
         }
 
 
-        
 
-        internal void dodajSliku(string uriLocation,String id)
+        public void ucitajMapu() {
+
+            foreach (Resurs r in ListaResursa) {
+
+                ImageBrush image = new ImageBrush();
+                image.ImageSource = new BitmapImage(new Uri(r.imagePath, UriKind.Relative));
+
+                Canvas c1 = new Canvas();
+                c1.Background = image;
+                c1.Width = 25;
+                c1.Height = 25;
+
+                c1.AllowDrop = true;
+
+                Canvas.SetTop(c1, r.pozicijaY);
+                Canvas.SetLeft(c1, r.pozicijaX);
+
+                mapa.Children.Add(c1);
+
+                skladiste.Add(r.id, c1);
+            }
+
+        }
+
+
+        internal void dodajSliku(Resurs r)
         {
-           
+          
             
-
+            
             ImageBrush image = new ImageBrush();
-            image.ImageSource = new BitmapImage(new Uri(uriLocation, UriKind.Relative));
+            image.ImageSource = new BitmapImage(new Uri(r.imagePath, UriKind.Relative));
 
             Canvas c1 = new Canvas();
             c1.Background = image;
             c1.Width = 25;
             c1.Height = 25;
 
-            skladiste.Add(id, c1);
+            skladiste.Add(r.id, c1);
 
-            Random r = new Random();
-            double y = r.NextDouble() * (mapa.Height - 230);
-            double x = r.NextDouble() * (mapa.Width-230);
-
+            Random rand = new Random();
+            double y = rand.NextDouble() * (mapa.Height - 230);
+            double x = rand.NextDouble() * (mapa.Width - 229);
+            r.pozicijaX = x;
+            r.pozicijaY = y;
+            
 
             Canvas.SetTop(c1, y);
             Canvas.SetLeft(c1, x);
-
-          
+            
 
             mapa.Children.Add(c1);
 
-
+            mapaDao.sacuvajMapu(mapa);
             c1.AllowDrop = true;
         }
 
@@ -269,6 +303,7 @@ namespace WpfApplication1
         {
             EtiqWindow et = new EtiqWindow(this);
             et.Show();
+            
         }
 
         private void izmeniEtiketuButton_Click(object sender, RoutedEventArgs e)
@@ -340,7 +375,7 @@ namespace WpfApplication1
             }
 
             daoEtiketa.upisiUFajl(ListaEtiketa);
-            daoLokal.upisiUFajl(ListaResursa);
+            daoResurs.upisiUFajl(ListaResursa);
         }
 
         // KAD JE LOKAL IZABRAN
@@ -408,7 +443,7 @@ namespace WpfApplication1
                 }
             }
 
-            daoLokal.upisiUFajl(ListaResursa);
+            daoResurs.upisiUFajl(ListaResursa);
 
             for (int i = 0; i < EtiketeIzabranog.Count; i++)        //brisi iz viewa DATAGRID
             {
@@ -443,9 +478,26 @@ namespace WpfApplication1
             {
                 mapa.ReleaseMouseCapture();
                 Panel.SetZIndex(draggedImage, 0);
+               
+
+                String id = skladiste.FirstOrDefault(x => x.Value == draggedImage).Key;
+
+                
+
+                foreach (Resurs r in ListaResursa)
+                {
+                    if (r.id == id)
+                    {
+                        r.pozicijaX = Canvas.GetLeft(draggedImage);
+                        r.pozicijaY = Canvas.GetTop(draggedImage);
+                    }
+                }
+                daoResurs.upisiUFajl(ListaResursa);
+
                 draggedImage = null;
             }
-
+            
+            
 
         }
 
@@ -483,8 +535,26 @@ namespace WpfApplication1
         {
 
         }
-    }
 
-    
+        
+
+
+        Point startPoint = new Point();
+
+        private void mapa_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void mapa_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void mapa_MouseMove_1(object sender, MouseEventArgs e)
+        {
+
+        }
+    }
 
 }

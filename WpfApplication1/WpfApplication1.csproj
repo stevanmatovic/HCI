@@ -60,7 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAO\EtiketaDAO.cs" />
-    <Compile Include="DAO\EtiketeLokalaDAO.cs" />
+    <Compile Include="DAO\MapaDAO.cs" />
     <Compile Include="DAO\ResursDAO.cs" />
     <Compile Include="DAO\TipDAO.cs" />
     <Compile Include="model\Etiketa.cs" />
@@ -95,6 +95,7 @@
       <DependentUpon>TabelarniPrikaz.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\TipResursa.cs" />
+    <Compile Include="Tacke.cs" />
     <Compile Include="Tipovi.xaml.cs">
       <DependentUpon>Tipovi.xaml</DependentUpon>
     </Compile>
