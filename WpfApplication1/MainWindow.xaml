@@ -90,7 +90,7 @@
                         <ColumnDefinition Width="93*"/>
                         <ColumnDefinition Width="622*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid AutoGenerateColumns="False" Height="85" HorizontalAlignment="Left" Margin="47,10,0,0" Name="etiketeDataGrid" ItemsSource="{Binding Path=ListaEtiketa}" VerticalAlignment="Top" Width="534" CanUserAddRows="False" Grid.Column="1" >
+                    <DataGrid AutoGenerateColumns="False" Height="99" HorizontalAlignment="Left" Margin="47,10,0,0" Name="etiketeDataGrid" ItemsSource="{Binding Path=ListaEtiketa}" VerticalAlignment="Top" Width="534" CanUserAddRows="False" Grid.Column="1" >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Boja" IsReadOnly="False">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -105,8 +105,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Content="Dodaj novu etiketu" Height="23" HorizontalAlignment="Left" Margin="0,11,0,0" Name="dodajEtiketuButton" VerticalAlignment="Top" Width="120" Click="dodajEtiketuButton_Click" Grid.ColumnSpan="2" />
-                    <Button Content="Izmeni etiketu" Height="23" HorizontalAlignment="Left" Margin="0,39,0,0" Name="izmeniEtiketuButton" VerticalAlignment="Top" Width="120" Click="izmeniEtiketuButton_Click" Grid.ColumnSpan="2" />
-                    <Button Content="Izbriši etiketu" Height="23" HorizontalAlignment="Right" Margin="0,72,616,0" Name="izbrisiEtiketuButton" VerticalAlignment="Top" Width="120" Click="izbrisiEtiketuButton_Click" Grid.ColumnSpan="2" />
+                    <Button Content="Izmeni etiketu" Height="23" HorizontalAlignment="Left" Margin="0,49,0,0" Name="izmeniEtiketuButton" VerticalAlignment="Top" Width="120" Click="izmeniEtiketuButton_Click" Grid.ColumnSpan="2" />
+                    <Button Content="Izbriši etiketu" Height="23" HorizontalAlignment="Right" Margin="0,86,616,0" Name="izbrisiEtiketuButton" VerticalAlignment="Top" Width="120" Click="izbrisiEtiketuButton_Click" Grid.ColumnSpan="2" />
                 </Grid>
             </TabItem>
         </TabControl>

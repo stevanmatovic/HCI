@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\App.xaml
-15-1953917864
-25-1061632751
-321424695050
+15-2008024275
+16-1513292225
+321680145867
 141201549847
-FiltracijaProzor.xaml;HelpViewer.xaml;NoviResurs.xaml;Etikete.xaml;EtiqWindow.xaml;IzaberiEtikete.xaml;IzmeniEtiketu.xaml;IzmeniPodatkeResursa.xaml;IzmeniTipResursa.xaml;MainWindow.xaml;MessageBox.xaml;TabelarniPrikaz.xaml;Tipovi.xaml;TypeWindow.xaml;UpozorenjeZaBrisanjeTipa.xaml;
+FiltracijaProzor.xaml;HelpViewer.xaml;NoviResurs.xaml;Etikete.xaml;EtiqWindow.xaml;IzaberiEtikete.xaml;IzmeniEtiketu.xaml;IzmeniPodatkeResursa.xaml;IzmeniTipResursa.xaml;MainWindow.xaml;MessageBox.xaml;TabelarniPrikaz.xaml;Tipovi.xaml;NoviTipResursa.xaml;UpozorenjeZaBrisanjeTipa.xaml;
 
-True
+False
 

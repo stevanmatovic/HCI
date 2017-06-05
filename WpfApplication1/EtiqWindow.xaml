@@ -21,7 +21,7 @@
         <Label Content="Unesite jedinstvenu oznaku etikete: " Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="Izaberite boju etikete: " Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="label2" VerticalAlignment="Top" Grid.Row="1" />
         <Label Content="Unesite opis etikete:" Height="28" HorizontalAlignment="Left" Margin="12,8,0,0" Name="label3" VerticalAlignment="Top" Grid.Row="2" />
-        <TextBox Grid.Column="1" Grid.Row="2" Height="84" HorizontalAlignment="Left" Margin="0,8,0,0" Name="opisEtikete" VerticalAlignment="Top" Width="204" >
+        <TextBox Grid.Column="1" Grid.Row="2" Height="84" HorizontalAlignment="Left" Margin="0,8,0,0" Name="opisEtikete" VerticalAlignment="Top" Width="204" local:HelpProvider.HelpKey="IzmenaOpisaEtikete">
             <TextBox.Text>
                 <Binding  NotifyOnValidationError="True" 
                           UpdateSourceTrigger="PropertyChanged" Path="Opis" >

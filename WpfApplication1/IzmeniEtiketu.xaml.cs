@@ -103,6 +103,15 @@ namespace WpfApplication1
             }
         }
 
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(this);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
         private void sacuvajButton_Click(object sender, RoutedEventArgs e)
         {
             retEtiketa.id = _id;

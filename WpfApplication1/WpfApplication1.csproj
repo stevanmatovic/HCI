@@ -102,8 +102,8 @@
     <Compile Include="Tipovi.xaml.cs">
       <DependentUpon>Tipovi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeWindow.xaml.cs">
-      <DependentUpon>TypeWindow.xaml</DependentUpon>
+    <Compile Include="NoviTipResursa.xaml.cs">
+      <DependentUpon>NoviTipResursa.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpozorenjeZaBrisanjeTipa.xaml.cs">
       <DependentUpon>UpozorenjeZaBrisanjeTipa.xaml</DependentUpon>
@@ -171,7 +171,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TypeWindow.xaml">
+    <Page Include="NoviTipResursa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,25 +217,16 @@
     <Content Include="help\IzmenaImena.htm" />
     <Content Include="help\IzmenaOpisa.htm" />
     <Content Include="help\IzmenaOpisaEtikete.htm" />
-    <Content Include="help\IzmenaOznake.htm" />
-    <Content Include="help\IzmenaOznakeEtikete.htm" />
     <Content Include="help\IzmenaPrihoda.htm" />
-    <Content Include="help\IzmenaSlike.htm" />
     <Content Include="help\IzmeniImeTipa.htm" />
     <Content Include="help\IzmeniOpisTipa.htm" />
-    <Content Include="help\IzmeniOznakuTipa.htm" />
-    <Content Include="help\IzmeniSlikuTipa.htm" />
-    <Content Include="help\OpisTipa.htm" />
     <Content Include="help\OznakaTipa.htm" />
-    <Content Include="help\Pretrazi.htm" />
-    <Content Include="help\SlikaTipa.htm" />
-    <Content Include="help\UnosImenaSpomenika.htm" />
-    <Content Include="help\UnosOpisaSpomenika.htm" />
+    <Content Include="help\UnosImenaResursa.htm" />
+    <Content Include="help\UnosOpisResursa.htm" />
     <Content Include="help\UnosOpisaTipa.htm" />
     <Content Include="help\UnosOznake.htm" />
     <Content Include="help\UnosOznakeTipa.htm" />
-    <Content Include="help\UnosPrihoda.htm" />
-    <Content Include="help\UnosSlikeSpomenika.htm" />
+    <Content Include="help\UnosCene.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

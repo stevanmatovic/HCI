@@ -252,6 +252,16 @@ namespace WpfApplication1
             this._uriLocation = izabraniTip.slikaPath;
         }
 
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(this);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+
         private void kapacitetBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

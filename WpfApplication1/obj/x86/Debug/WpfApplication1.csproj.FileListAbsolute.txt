@@ -89,7 +89,6 @@ C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\MainWindow.ba
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\MessageBox.baml
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\TabelarniPrikaz.baml
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\Tipovi.baml
-C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\TypeWindow.baml
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\UpozorenjeZaBrisanjeTipa.baml
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\FiltracijaProzor.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\HelpViewer.g.cs
@@ -104,7 +103,6 @@ C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\MainWindow.g.
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\MessageBox.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\TabelarniPrikaz.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\Tipovi.g.cs
-C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\TypeWindow.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\UpozorenjeZaBrisanjeTipa.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\App.g.cs
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\WpfApplication1_Content.g.cs
@@ -121,3 +119,5 @@ C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\WpfApplicatio
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\WpfApplication1.exe
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\WpfApplication1.pdb
 C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\NoviTipResursa.g.cs
+C:\FAKULTET\6.semestar\HCI\Projekat1\WpfApplication1\obj\x86\Debug\NoviTipResursa.baml
